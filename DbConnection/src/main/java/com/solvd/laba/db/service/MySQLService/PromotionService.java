@@ -6,6 +6,7 @@ import com.solvd.laba.db.service.DAOService;
 
 public class PromotionService implements DAOService<Promotion> {
     private MySQLPromotionDAO promotionDAO;
+    
     public PromotionService(MySQLPromotionDAO promotionDAO) {
         this.promotionDAO = promotionDAO;
     }

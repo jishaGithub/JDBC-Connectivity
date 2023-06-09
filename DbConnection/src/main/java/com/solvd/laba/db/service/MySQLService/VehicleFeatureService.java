@@ -6,6 +6,7 @@ import com.solvd.laba.db.service.DAOService;
 
 public class VehicleFeatureService implements DAOService<VehicleFeature> {
     private MySQLVehicleFeatureDAO vehicleFeatureDAO;
+    
     public VehicleFeatureService(MySQLVehicleFeatureDAO vehicleFeatureDAO) {
         this.vehicleFeatureDAO = vehicleFeatureDAO;
     }
