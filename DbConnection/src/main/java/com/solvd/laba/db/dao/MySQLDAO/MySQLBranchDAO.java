@@ -9,6 +9,7 @@ public class MySQLBranchDAO extends AbstractDAO<Branch> {
     public MySQLBranchDAO() {
         ConfigFileDAO.loadPropertyConfigFile();
     }
+
     @Override
     public Boolean findById(int id1) {
         System.out.println("Finding record of ID:" + id1 + ".....");
