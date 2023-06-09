@@ -17,7 +17,7 @@ public class MySQLBranchDAO extends AbstractDAO<Branch> {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM branch where id=?");
             preparedStatement.setInt(1, id1);
             ResultSet result = preparedStatement.executeQuery();
-            if(result.next()) {
+            if (result.next()) {
                 int branchId = result.getInt("id");
                 String branchName = result.getString("branch_name");
                 int branchLocationId = result.getInt("branch_location_id");
