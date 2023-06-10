@@ -6,15 +6,11 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class MySQLVehicleCategoryDAO extends AbstractDAO<VehicleCategory> {
-    public MySQLVehicleCategoryDAO() {
-        ConfigFileDAO.loadPropertyConfigFile();
-    }
 
     @Override
     public Boolean findById(int id) {
         System.out.println("Finding record of ID: " + id + "...");
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM vehicle_category WHERE id=?");
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT * FROM vehicle_category WHERE id=?")) {
             preparedStatement.setInt(1, id);
             ResultSet result = preparedStatement.executeQuery();
             if (result.next()) {
@@ -38,8 +34,7 @@ public class MySQLVehicleCategoryDAO extends AbstractDAO<VehicleCategory> {
     public ArrayList<VehicleCategory> selectAll() {
         System.out.println("Displaying all the rows from vehicle_category table");
         ArrayList<VehicleCategory> vehicleCategories = new ArrayList<>();
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM vehicle_category");
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT * FROM vehicle_category")) {
             ResultSet result = preparedStatement.executeQuery();
             while (result.next()) {
                 int categoryId = result.getInt("id");
@@ -58,9 +53,8 @@ public class MySQLVehicleCategoryDAO extends AbstractDAO<VehicleCategory> {
 
     @Override
     public void addNewRow(VehicleCategory vehicleCategory) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            String insertValueStatement = "INSERT INTO vehicle_category(category_name) VALUES (?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(insertValueStatement);
+        String insertValueStatement = "INSERT INTO vehicle_category(category_name) VALUES (?)";
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(insertValueStatement)) {
             preparedStatement.setString(1, vehicleCategory.getCategoryName());
             preparedStatement.executeUpdate();
             System.out.println("Insertion complete");
@@ -72,9 +66,8 @@ public class MySQLVehicleCategoryDAO extends AbstractDAO<VehicleCategory> {
 
     @Override
     public void update(VehicleCategory vehicleCategory, int id) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            String updateStatement = "UPDATE vehicle_category SET category_name=? WHERE id=?";
-            PreparedStatement preparedStatement = connection.prepareStatement(updateStatement);
+        String updateStatement = "UPDATE vehicle_category SET category_name=? WHERE id=?";
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(updateStatement)) {
             preparedStatement.setString(1, vehicleCategory.getCategoryName());
             preparedStatement.setInt(2, id);
             preparedStatement.executeUpdate();
@@ -87,10 +80,9 @@ public class MySQLVehicleCategoryDAO extends AbstractDAO<VehicleCategory> {
 
     @Override
     public void delete(int id) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
+        String deleteStatement = "DELETE FROM vehicle_category WHERE id=?";
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(deleteStatement)) {
             if (findById(id)) {
-                String deleteStatement = "DELETE FROM vehicle_category WHERE id=?";
-                PreparedStatement preparedStatement = connection.prepareStatement(deleteStatement);
                 preparedStatement.setInt(1, id);
                 preparedStatement.executeUpdate();
                 System.out.println("Deletion complete");
