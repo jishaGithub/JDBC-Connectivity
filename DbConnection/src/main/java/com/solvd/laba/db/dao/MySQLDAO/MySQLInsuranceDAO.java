@@ -6,15 +6,11 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class MySQLInsuranceDAO extends AbstractDAO<Insurance> {
-    public MySQLInsuranceDAO() {
-        ConfigFileDAO.loadPropertyConfigFile();
-    }
-
+    
     @Override
     public Boolean findById(int id) {
         System.out.println("Finding record of ID: " + id + "...");
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM insurance WHERE id=?");
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT * FROM insurance WHERE id=?")) {
             preparedStatement.setInt(1, id);
             ResultSet result = preparedStatement.executeQuery();
             if (result.next()) {
@@ -41,8 +37,7 @@ public class MySQLInsuranceDAO extends AbstractDAO<Insurance> {
     public ArrayList<Insurance> selectAll() {
         System.out.println("Displaying all the rows from insurance table");
         ArrayList<Insurance> insurances = new ArrayList<>();
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM insurance");
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT * FROM insurance")) {
             ResultSet result = preparedStatement.executeQuery();
             while (result.next()) {
                 int insuranceId = result.getInt("id");
@@ -63,9 +58,8 @@ public class MySQLInsuranceDAO extends AbstractDAO<Insurance> {
 
     @Override
     public void addNewRow(Insurance insurance) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            String insertValueStatement = "INSERT INTO insurance (insurance_name, coverage, customer_id) VALUES (?, ?, ?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(insertValueStatement);
+        String insertValueStatement = "INSERT INTO insurance (insurance_name, coverage, customer_id) VALUES (?, ?, ?)";
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(insertValueStatement)) {
             preparedStatement.setString(1, insurance.getInsuranceName());
             preparedStatement.setDouble(2, insurance.getCoverage());
             preparedStatement.setInt(3, insurance.getCustomerId());
@@ -79,9 +73,8 @@ public class MySQLInsuranceDAO extends AbstractDAO<Insurance> {
 
     @Override
     public void update(Insurance insurance, int id) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            String updateStatement = "UPDATE insurance SET insurance_name=?, coverage=?, customer_id=? WHERE id=?";
-            PreparedStatement preparedStatement = connection.prepareStatement(updateStatement);
+        String updateStatement = "UPDATE insurance SET insurance_name=?, coverage=?, customer_id=? WHERE id=?";
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(updateStatement)) {
             preparedStatement.setString(1, insurance.getInsuranceName());
             preparedStatement.setDouble(2, insurance.getCoverage());
             preparedStatement.setInt(3, insurance.getCustomerId());
@@ -96,10 +89,9 @@ public class MySQLInsuranceDAO extends AbstractDAO<Insurance> {
 
     @Override
     public void delete(int id) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
+        String deleteStatement = "DELETE FROM insurance WHERE id=?";
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(deleteStatement)) {
             if (findById(id)) {
-                String deleteStatement = "DELETE FROM insurance WHERE id=?";
-                PreparedStatement preparedStatement = connection.prepareStatement(deleteStatement);
                 preparedStatement.setInt(1, id);
                 preparedStatement.executeUpdate();
                 System.out.println("Deletion complete");
