@@ -6,15 +6,10 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class MySQLCustomerAuthenticationDAO extends AbstractDAO<CustomerAuthentication> {
-    public MySQLCustomerAuthenticationDAO() {
-       ConfigFileDAO.loadPropertyConfigFile();
-    }
-
     @Override
     public Boolean findById(int id) {
         System.out.println("Finding record of ID: " + id + "...");
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM customer_authentication WHERE id=?");
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT * FROM customer_authentication WHERE id=?")) {
             preparedStatement.setInt(1, id);
             ResultSet result = preparedStatement.executeQuery();
             if (result.next()) {
@@ -41,8 +36,7 @@ public class MySQLCustomerAuthenticationDAO extends AbstractDAO<CustomerAuthenti
     public ArrayList<CustomerAuthentication> selectAll() {
         System.out.println("Displaying all rows from customer_authentication table...");
         ArrayList<CustomerAuthentication> customerAuthList = new ArrayList<>();
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM customer_authentication");
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT * FROM customer_authentication")) {
             ResultSet result = preparedStatement.executeQuery();
             while (result.next()) {
                 int authId = result.getInt("id");
@@ -62,9 +56,8 @@ public class MySQLCustomerAuthenticationDAO extends AbstractDAO<CustomerAuthenti
 
     @Override
     public void addNewRow (CustomerAuthentication row) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            String insertValueStatement = "INSERT INTO customer_authentication (user_name, password, customer_id) VALUES (?, ?, ?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(insertValueStatement);
+        String insertValueStatement = "INSERT INTO customer_authentication (user_name, password, customer_id) VALUES (?, ?, ?)";
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(insertValueStatement)) {
             preparedStatement.setString(1, row.getUserName());
             preparedStatement.setString(2, row.getPassword());
             preparedStatement.setInt(3, row.getCustomerId());
@@ -78,9 +71,8 @@ public class MySQLCustomerAuthenticationDAO extends AbstractDAO<CustomerAuthenti
 
     @Override
     public void update(CustomerAuthentication customerAuth, int id) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            String updateStatement = "UPDATE customer_authentication SET user_name=?, password=?, customer_id=? WHERE id=?";
-            PreparedStatement preparedStatement = connection.prepareStatement(updateStatement);
+        String updateStatement = "UPDATE customer_authentication SET user_name=?, password=?, customer_id=? WHERE id=?";
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(updateStatement)) {
             preparedStatement.setString(1, customerAuth.getUserName());
             preparedStatement.setString(2, customerAuth.getPassword());
             preparedStatement.setInt(3, customerAuth.getCustomerId());
@@ -95,10 +87,9 @@ public class MySQLCustomerAuthenticationDAO extends AbstractDAO<CustomerAuthenti
 
     @Override
     public void delete(int id) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
+        String deleteStatement = "DELETE FROM customer_authentication WHERE id=?";
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(deleteStatement)) {
             if (findById(id)) {
-                String deleteStatement = "DELETE FROM customer_authentication WHERE id=?";
-                PreparedStatement preparedStatement = connection.prepareStatement(deleteStatement);
                 preparedStatement.setInt(1, id);
                 preparedStatement.executeUpdate();
                 System.out.println("Deletion complete");
