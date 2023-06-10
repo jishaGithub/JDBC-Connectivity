@@ -5,16 +5,11 @@ import com.solvd.laba.db.model.Employee;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class MySQLEmployeeDAO extends AbstractDAO<Employee> {
-    public MySQLEmployeeDAO() {
-        ConfigFileDAO.loadPropertyConfigFile();
-    }
-
+public class MySQLEmployeeDAO extends AbstractDAO<Employee> {    
     @Override
     public Boolean findById(int id) {
         System.out.println("Finding record of ID: " + id + "...");
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM employee WHERE id=?");
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT * FROM employee WHERE id=?")) {
             preparedStatement.setInt(1, id);
             ResultSet result = preparedStatement.executeQuery();
             if (result.next()) {
@@ -41,8 +36,7 @@ public class MySQLEmployeeDAO extends AbstractDAO<Employee> {
     public ArrayList<Employee> selectAll() {
         System.out.println("Displaying all the rows from employee table");
         ArrayList<Employee> employees = new ArrayList<>();
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM employee");
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT * FROM employee")) {
             ResultSet result = preparedStatement.executeQuery();
             while (result.next()) {
                 int employeeId = result.getInt("id");
@@ -63,9 +57,8 @@ public class MySQLEmployeeDAO extends AbstractDAO<Employee> {
 
     @Override
     public void addNewRow(Employee employee) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            String insertValueStatement = "INSERT INTO employee (name, email, branch_id) VALUES (?, ?, ?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(insertValueStatement);
+        String insertValueStatement = "INSERT INTO employee (name, email, branch_id) VALUES (?, ?, ?)";
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(insertValueStatement)) {
             preparedStatement.setString(1, employee.getName());
             preparedStatement.setString(2, employee.getEmail());
             preparedStatement.setInt(3, employee.getBranchId());
@@ -79,9 +72,8 @@ public class MySQLEmployeeDAO extends AbstractDAO<Employee> {
 
     @Override
     public void update(Employee employee, int id) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            String updateStatement = "UPDATE employee SET name=?, email=?, branch_id=? WHERE id=?";
-            PreparedStatement preparedStatement = connection.prepareStatement(updateStatement);
+        String updateStatement = "UPDATE employee SET name=?, email=?, branch_id=? WHERE id=?";
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(updateStatement)) {
             preparedStatement.setString(1, employee.getName());
             preparedStatement.setString(2, employee.getEmail());
             preparedStatement.setInt(3, employee.getBranchId());
@@ -98,10 +90,9 @@ public class MySQLEmployeeDAO extends AbstractDAO<Employee> {
 
     @Override
     public void delete(int id) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
+        String deleteStatement = "DELETE FROM employee WHERE id=?";
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(deleteStatement)) {
             if (findById(id)) {
-                String deleteStatement = "DELETE FROM employee WHERE id=?";
-                PreparedStatement preparedStatement = connection.prepareStatement(deleteStatement);
                 preparedStatement.setInt(1, id);
                 preparedStatement.executeUpdate();
                 System.out.println("Deletion complete");
