@@ -7,15 +7,10 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class MySQLRentalDAO extends AbstractDAO<Rental> {
-    public MySQLRentalDAO() {
-        ConfigFileDAO.loadPropertyConfigFile();
-    }
-
     @Override
     public Boolean findById(int id) {
         System.out.println("Finding record of ID: " + id + "...");
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM rental WHERE id=?");
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT * FROM rental WHERE id=?")) {
             preparedStatement.setInt(1, id);
             ResultSet result = preparedStatement.executeQuery();
             if (result.next()) {
@@ -48,8 +43,7 @@ public class MySQLRentalDAO extends AbstractDAO<Rental> {
     public ArrayList<Rental> selectAll() {
         System.out.println("Displaying all the rows from rental table");
         ArrayList<Rental> rentals = new ArrayList<>();
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM rental");
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT * FROM rental")) {
             ResultSet result = preparedStatement.executeQuery();
             while (result.next()) {
                 int rentalId = result.getInt("id");
@@ -76,9 +70,8 @@ public class MySQLRentalDAO extends AbstractDAO<Rental> {
 
     @Override
     public void addNewRow(Rental rental) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            String insertStatement = "INSERT INTO rental (rental_date, return_date, customer_id, insurance_id, rental_rate_id, vehicle_id, promotion_id, employee_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(insertStatement);
+        String insertStatement = "INSERT INTO rental (rental_date, return_date, customer_id, insurance_id, rental_rate_id, vehicle_id, promotion_id, employee_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(insertStatement)) {
             preparedStatement.setDate(1, new java.sql.Date(rental.getRentalDate().getTime()));
             preparedStatement.setDate(2, new java.sql.Date(rental.getReturnDate().getTime()));
             preparedStatement.setInt(3, rental.getCustomerId());
@@ -97,10 +90,9 @@ public class MySQLRentalDAO extends AbstractDAO<Rental> {
 
     @Override
     public void update(Rental rental,int id) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
+        String updateStatement = "UPDATE rental SET rental_date=?, return_date=?, customer_id=?, insurance_id=?, rental_rate_id=?, vehicle_id=?, promotion_id=?, employee_id=? WHERE id=?";
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(updateStatement)) {
             if (findById(rental.getId())) {
-                String updateStatement = "UPDATE rental SET rental_date=?, return_date=?, customer_id=?, insurance_id=?, rental_rate_id=?, vehicle_id=?, promotion_id=?, employee_id=? WHERE id=?";
-                PreparedStatement preparedStatement = connection.prepareStatement(updateStatement);
                 preparedStatement.setDate(1, new java.sql.Date(rental.getRentalDate().getTime()));
                 preparedStatement.setDate(2, new java.sql.Date(rental.getReturnDate().getTime()));
                 preparedStatement.setInt(3, rental.getCustomerId());
@@ -121,10 +113,9 @@ public class MySQLRentalDAO extends AbstractDAO<Rental> {
 
     @Override
     public void delete(int id) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
+        String deleteStatement = "DELETE FROM rental WHERE id=?";
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(deleteStatement)) {
             if (findById(id)) {
-                String deleteStatement = "DELETE FROM rental WHERE id=?";
-                PreparedStatement preparedStatement = connection.prepareStatement(deleteStatement);
                 preparedStatement.setInt(1, id);
                 preparedStatement.executeUpdate();
                 System.out.println("Deletion complete");
