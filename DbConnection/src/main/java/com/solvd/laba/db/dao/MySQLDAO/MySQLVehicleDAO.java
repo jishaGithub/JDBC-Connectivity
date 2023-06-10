@@ -5,16 +5,11 @@ import com.solvd.laba.db.model.Vehicle;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class MySQLVehicleDAO extends AbstractDAO<Vehicle> {
-    public MySQLVehicleDAO() {
-        ConfigFileDAO.loadPropertyConfigFile();
-    }
-
+public class MySQLVehicleDAO extends AbstractDAO<Vehicle> {    
     @Override
     public Boolean findById(int id1) {
         System.out.println("Finding record of ID:" + id1 + ".....");
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM vehicle where id=?");
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT * FROM vehicle where id=?")) {
             preparedStatement.setInt(1, id1);
             ResultSet result = preparedStatement.executeQuery();
             result.next();
@@ -42,8 +37,7 @@ public class MySQLVehicleDAO extends AbstractDAO<Vehicle> {
     public ArrayList<Vehicle> selectAll() {
         System.out.println("Displaying all the rows from vehicle table");
         ArrayList<Vehicle> vehicles = new ArrayList<>();
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM vehicle");
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT * FROM vehicle")) {
             ResultSet result = preparedStatement.executeQuery();
             while (result.next()) {
                 int id = result.getInt("id");
@@ -68,10 +62,9 @@ public class MySQLVehicleDAO extends AbstractDAO<Vehicle> {
 
     @Override
     public void addNewRow(Vehicle row) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            String insertValueStatement = "INSERT INTO `vehicle`(`brand`,`model`,`year`,`color`,mileage,`license_num`,`category_id`,`customer_id`)\n" +
+        String insertValueStatement = "INSERT INTO `vehicle`(`brand`,`model`,`year`,`color`,mileage,`license_num`,`category_id`,`customer_id`)\n" +
                     "VALUES (?,?,?,?,?,?,?,?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(insertValueStatement);
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(insertValueStatement)) {
             preparedStatement.setString(1, row.getBrand());
             preparedStatement.setString(2, row.getModel());
             preparedStatement.setInt(3, row.getYear());
@@ -91,10 +84,9 @@ public class MySQLVehicleDAO extends AbstractDAO<Vehicle> {
 
     @Override
     public void update(Vehicle vehicle, int id) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            String updateStatement = "UPDATE vehicle SET brand=?,model=?,year=?,color=?,mileage=?," +
+        String updateStatement = "UPDATE vehicle SET brand=?,model=?,year=?,color=?,mileage=?," +
                     "license_num=?,category_id=?,customer_id=? WHERE id=?";
-            PreparedStatement preparedStatement = connection.prepareStatement(updateStatement);
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(updateStatement)) {
             preparedStatement.setString(1, vehicle.getBrand());
             preparedStatement.setString(2, vehicle.getModel());
             preparedStatement.setInt(3, vehicle.getYear());
@@ -115,10 +107,9 @@ public class MySQLVehicleDAO extends AbstractDAO<Vehicle> {
 
     @Override
     public void delete(int id) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
+        String deleteStatement = "DELETE from vehicle WHERE id=?";
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(deleteStatement)) {
             if (findById(id)) {
-                String deleteStatement = "DELETE from vehicle WHERE id=?";
-                PreparedStatement preparedStatement = connection.prepareStatement(deleteStatement);
                 preparedStatement.setInt(1, id);
                 preparedStatement.executeUpdate();
                 System.out.println("Deletion complete");
