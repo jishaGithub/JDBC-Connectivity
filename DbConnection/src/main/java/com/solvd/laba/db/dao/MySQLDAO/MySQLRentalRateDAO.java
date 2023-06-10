@@ -6,15 +6,11 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class MySQLRentalRateDAO extends AbstractDAO<RentalRate> {
-    public MySQLRentalRateDAO() {
-        ConfigFileDAO.loadPropertyConfigFile();
-    }
 
     @Override
     public Boolean findById(int id) {
         System.out.println("Finding record of ID: " + id + "...");
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM rental_rate WHERE id=?");
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT * FROM rental_rate WHERE id=?")) {
             preparedStatement.setInt(1, id);
             ResultSet result = preparedStatement.executeQuery();
             if (result.next()) {
@@ -41,8 +37,7 @@ public class MySQLRentalRateDAO extends AbstractDAO<RentalRate> {
     public ArrayList<RentalRate> selectAll() {
         System.out.println("Displaying all the rows from rental_rate table");
         ArrayList<RentalRate> rentalRates = new ArrayList<>();
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM rental_rate");
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT * FROM rental_rate")) {
             ResultSet result = preparedStatement.executeQuery();
             while (result.next()) {
                 int rentalId = result.getInt("id");
@@ -64,9 +59,8 @@ public class MySQLRentalRateDAO extends AbstractDAO<RentalRate> {
 
     @Override
     public void addNewRow(RentalRate rentalRate) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            String insertValueStatement = "INSERT INTO rental_rate(rental_type, rental_amount, min_duration, max_duration) VALUES (?, ?, ?, ?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(insertValueStatement);
+        String insertValueStatement = "INSERT INTO rental_rate(rental_type, rental_amount, min_duration, max_duration) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(insertValueStatement)) {
             preparedStatement.setString(1, rentalRate.getRentalType());
             preparedStatement.setDouble(2, rentalRate.getRentalAmount());
             preparedStatement.setInt(3, rentalRate.getMinDuration());
@@ -81,9 +75,8 @@ public class MySQLRentalRateDAO extends AbstractDAO<RentalRate> {
 
     @Override
     public void update(RentalRate rentalRate, int id) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            String updateStatement = "UPDATE rental_rate SET rental_type=?, rental_amount=?, min_duration=?, max_duration=? WHERE id=?";
-            PreparedStatement preparedStatement = connection.prepareStatement(updateStatement);
+        String updateStatement = "UPDATE rental_rate SET rental_type=?, rental_amount=?, min_duration=?, max_duration=? WHERE id=?";
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(updateStatement)) {
             preparedStatement.setString(1, rentalRate.getRentalType());
             preparedStatement.setDouble(2, rentalRate.getRentalAmount());
             preparedStatement.setInt(3, rentalRate.getMinDuration());
@@ -99,10 +92,9 @@ public class MySQLRentalRateDAO extends AbstractDAO<RentalRate> {
 
     @Override
     public void delete(int id) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
+        String deleteStatement = "DELETE FROM rental_rate WHERE id=?";
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(deleteStatement)) {
             if (findById(id)) {
-                String deleteStatement = "DELETE FROM rental_rate WHERE id=?";
-                PreparedStatement preparedStatement = connection.prepareStatement(deleteStatement);
                 preparedStatement.setInt(1, id);
                 preparedStatement.executeUpdate();
                 System.out.println("Deletion complete");
