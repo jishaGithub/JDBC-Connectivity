@@ -6,15 +6,10 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class MySQLBranchLocationDAO extends AbstractDAO<BranchLocation> {
-    public MySQLBranchLocationDAO() {
-        ConfigFileDAO.loadPropertyConfigFile();
-    }
-
     @Override
     public Boolean findById(int id) {
         System.out.println("Finding record of ID: " + id + "...");
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM branch_location WHERE id=?");
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT * FROM branch_location WHERE id=?")) {
             preparedStatement.setInt(1, id);
             ResultSet result = preparedStatement.executeQuery();
             if (result.next()) {
@@ -42,8 +37,7 @@ public class MySQLBranchLocationDAO extends AbstractDAO<BranchLocation> {
     public ArrayList<BranchLocation> selectAll() {
         System.out.println("Displaying all rows from branch_location table...");
         ArrayList<BranchLocation> branchLocations = new ArrayList<>();
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM branch_location");
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT * FROM branch_location")) {
             ResultSet result = preparedStatement.executeQuery();
             while (result.next()) {
                 int branchLocationId = result.getInt("id");
@@ -64,9 +58,8 @@ public class MySQLBranchLocationDAO extends AbstractDAO<BranchLocation> {
 
     @Override
     public void addNewRow(BranchLocation row) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            String insertValueStatement = "INSERT INTO branch_location (street, city, state, zip) VALUES (?, ?, ?, ?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(insertValueStatement);
+        String insertValueStatement = "INSERT INTO branch_location (street, city, state, zip) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(insertValueStatement)) {
             preparedStatement.setString(1, row.getStreet());
             preparedStatement.setString(2, row.getCity());
             preparedStatement.setString(3, row.getState());
@@ -82,9 +75,8 @@ public class MySQLBranchLocationDAO extends AbstractDAO<BranchLocation> {
 
     @Override
     public void update(BranchLocation branchLocation, int id) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            String updateStatement = "UPDATE branch_location SET street=?, city=?, state=?, zip=? WHERE id=?";
-            PreparedStatement preparedStatement = connection.prepareStatement(updateStatement);
+       String updateStatement = "UPDATE branch_location SET street=?, city=?, state=?, zip=? WHERE id=?";
+       try (PreparedStatement preparedStatement = getConnection().prepareStatement(updateStatement)) {
             preparedStatement.setString(1, branchLocation.getStreet());
             preparedStatement.setString(2, branchLocation.getCity());
             preparedStatement.setString(3, branchLocation.getState());
@@ -101,10 +93,9 @@ public class MySQLBranchLocationDAO extends AbstractDAO<BranchLocation> {
 
     @Override
     public void delete(int id) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
+        String deleteStatement = "DELETE FROM branch_location WHERE id=?";
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(deleteStatement)) {
             if (findById(id)) {
-                String deleteStatement = "DELETE FROM branch_location WHERE id=?";
-                PreparedStatement preparedStatement = connection.prepareStatement(deleteStatement);
                 preparedStatement.setInt(1, id);
                 preparedStatement.executeUpdate();
                 System.out.println("Deletion complete");
