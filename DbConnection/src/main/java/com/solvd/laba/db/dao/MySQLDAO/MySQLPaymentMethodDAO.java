@@ -6,15 +6,10 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class MySQLPaymentMethodDAO extends AbstractDAO<PaymentMethod> {
-    public MySQLPaymentMethodDAO() {
-        ConfigFileDAO.loadPropertyConfigFile();
-    }
-
     @Override
     public Boolean findById(int id) {
         System.out.println("Finding record of ID: " + id + "...");
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM payment_method WHERE id=?");
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT * FROM payment_method WHERE id=?")) {
             preparedStatement.setInt(1, id);
             ResultSet result = preparedStatement.executeQuery();
             if (result.next()) {
@@ -39,8 +34,7 @@ public class MySQLPaymentMethodDAO extends AbstractDAO<PaymentMethod> {
     public ArrayList<PaymentMethod> selectAll() {
         System.out.println("Displaying all the rows from payment_method table");
         ArrayList<PaymentMethod> paymentMethods = new ArrayList<>();
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM payment_method");
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT * FROM payment_method")) {
             ResultSet result = preparedStatement.executeQuery();
             while (result.next()) {
                 int paymentMethodId = result.getInt("id");
@@ -59,9 +53,8 @@ public class MySQLPaymentMethodDAO extends AbstractDAO<PaymentMethod> {
 
     @Override
     public void addNewRow(PaymentMethod paymentMethod) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            String insertValueStatement = "INSERT INTO payment_method (payment_type) VALUES (?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(insertValueStatement);
+        String insertValueStatement = "INSERT INTO payment_method (payment_type) VALUES (?)";
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(insertValueStatement)) {
             preparedStatement.setString(1, paymentMethod.getPaymentType());
             preparedStatement.executeUpdate();
             System.out.println("Insertion complete");
@@ -73,10 +66,9 @@ public class MySQLPaymentMethodDAO extends AbstractDAO<PaymentMethod> {
 
     @Override
     public void update(PaymentMethod paymentMethod, int id) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
+        String updateStatement = "UPDATE payment_method SET payment_type=? WHERE id=?";
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(updateStatement)) {
             if (findById(id)) {
-                String updateStatement = "UPDATE payment_method SET payment_type=? WHERE id=?";
-                PreparedStatement preparedStatement = connection.prepareStatement(updateStatement);
                 preparedStatement.setString(1, paymentMethod.getPaymentType());
                 preparedStatement.setInt(2, id);
                 preparedStatement.executeUpdate();
@@ -90,10 +82,9 @@ public class MySQLPaymentMethodDAO extends AbstractDAO<PaymentMethod> {
 
     @Override
     public void delete(int id) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
+        String deleteStatement = "DELETE FROM payment_method WHERE id=?";
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(deleteStatement)) {
             if (findById(id)) {
-                String deleteStatement = "DELETE FROM payment_method WHERE id=?";
-                PreparedStatement preparedStatement = connection.prepareStatement(deleteStatement);
                 preparedStatement.setInt(1, id);
                 preparedStatement.executeUpdate();
                 System.out.println("Deletion complete");
