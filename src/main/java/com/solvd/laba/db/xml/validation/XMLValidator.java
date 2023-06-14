@@ -21,35 +21,27 @@ import java.io.*;
 public class XMLValidator {
     private static final Logger logger = LogManager.getLogger(XMLValidator.class);
 
-    public boolean XSDValidation(String xmlFile, String schemaFile) {
+    public static Schema getSchema(String xmlFile, String schemaFile) {
         try {
             SchemaFactory schemaFactory = SchemaFactory.newInstance("http://www.w3.org/2001/XMLSchema");
-            Schema rentalSchema = schemaFactory.newSchema(new File(schemaFile));
-            Validator validator = rentalSchema.newValidator();
-            validator.validate(new StreamSource(new File(xmlFile)));
-            logger.info("Successfully validated the XML file: " + xmlFile + " using the xml schema: " + schemaFile);
-            return true;
-        } catch (SAXException saxe) {
-            logger.error("Error validating XML: " + saxe.getMessage());
-            return false;
-        } catch (IOException ioe) {
-            logger.error("IO error: "+ioe.getMessage());
-            return false;
+            return schemaFactory.newSchema(new File(schemaFile));
+        } catch (SAXException e) {
+            logger.error(e.getMessage());
         }
+        return null;
     }
 
-    public boolean domValidator(String xmlFile, String schemaFile) {
+        public boolean domValidator(String xmlFile, String schemaFile) {
         try {
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             documentBuilderFactory.setValidating(true);
             DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
             documentBuilder.setErrorHandler(new DefaultHandler());
             Document document = documentBuilder.parse(xmlFile);
-            SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            Schema rentalSchema = schemaFactory.newSchema(new File(schemaFile));
+            Schema rentalSchema = getSchema(xmlFile,schemaFile);
             Validator validator = rentalSchema.newValidator();
             validator.validate(new DOMSource(document));
-            logger.info("Valid xml document validation using DOM parser");
+            logger.info("Valid xml - validated using DOM parser");
         } catch (ParserConfigurationException pce) {
             logger.error("Invalid XML: "+pce.getMessage());
             return false;
@@ -67,8 +59,7 @@ public class XMLValidator {
         try {
             SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
             saxParserFactory.setValidating(true);
-            SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            Schema rentalSchema = schemaFactory.newSchema(new File(schemaFile));
+            Schema rentalSchema = getSchema(xmlFile,schemaFile);
             saxParserFactory.setSchema(rentalSchema);
             SAXParser saxParser = saxParserFactory.newSAXParser();
             saxParser.parse(new File(xmlFile), new DefaultHandler());
@@ -92,8 +83,7 @@ public class XMLValidator {
         XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
         try {
             XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new FileInputStream(xmlFile));
-            SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            Schema rentalSchema = schemaFactory.newSchema(new File(schemaFile));
+            Schema rentalSchema = getSchema(xmlFile,schemaFile);
             Validator validator = rentalSchema.newValidator();
             validator.validate(new StAXSource(xmlStreamReader));
             while(xmlStreamReader.hasNext()) {
