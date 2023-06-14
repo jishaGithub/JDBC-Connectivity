@@ -1,7 +1,7 @@
 package com.solvd.laba;
 
+import com.solvd.laba.db.connection.ConfigFileDAO;
 import com.solvd.laba.db.dao.MySQLDAO.*;
-import com.solvd.laba.db.model.Branch;
 import com.solvd.laba.db.model.CustomerAuthentication;
 import com.solvd.laba.db.model.Employee;
 import com.solvd.laba.db.service.MySQLService.*;
@@ -17,7 +17,6 @@ public class Main {
         BranchService branchService = new BranchService(new MySQLBranchDAO());
         branchService.findById(3);
         branchService.selectAll();
-        //branchService.newRow(new Branch("Branch H",2));
         branchService.deleteRow(12);
         CustomerService customerService = new CustomerService(new MySQLCustomerDAO());
         customerService.findById(3);
@@ -26,7 +25,6 @@ public class Main {
         customerAuthenticationService.selectAll();
         customerAuthenticationService.updateRow(new CustomerAuthentication("jd2023","5634",4),4);
         InsuranceService insuranceService = new InsuranceService(new MySQLInsuranceDAO());
-        //insuranceService.newRow(new Insurance("Basic Insurance", 100.0,5));
         insuranceService.selectAll();
         insuranceService.deleteRow(6);
         PaymentService paymentService = new PaymentService(new MySQLPaymentDAO());
