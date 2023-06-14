@@ -55,9 +55,7 @@ public class Main {
         }
         String xmlFileName = "src/main/resources/carRentalService.xml";
         String schemaFileName = "src/main/resources/carRentalService.xsd";
-
         XMLValidator xmlValidator = new XMLValidator();
-        xmlValidator.XSDValidation(xmlFileName, schemaFileName);
         xmlValidator.domValidator(xmlFileName, schemaFileName);
         xmlValidator.SAXValidator(xmlFileName, schemaFileName);
         xmlValidator.staxValidation(xmlFileName, schemaFileName);
