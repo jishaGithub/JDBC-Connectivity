@@ -4,7 +4,6 @@ import com.solvd.laba.db.dao.AbstractDAO;
 import com.solvd.laba.db.model.Insurance;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.sql.*;
 import java.util.ArrayList;
 
