@@ -2,37 +2,47 @@ package com.solvd.laba.db.dao.MySQLDAO;
 
 import com.solvd.laba.db.dao.AbstractDAO;
 import com.solvd.laba.db.model.VehicleHasVehicleFeature;
-import java.sql.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class MySQLVehicleHasVehicleFeatureDAO extends AbstractDAO<VehicleHasVehicleFeature> {
-    public MySQLVehicleHasVehicleFeatureDAO() {
-        ConfigFileDAO.loadPropertyConfigFile();
-    }
+    private static final Logger logger = LogManager.getLogger(MySQLVehicleHasVehicleFeatureDAO.class);
+    private static final String FIND_BY_ID = "SELECT * FROM vehicle_has_vehicle_feature WHERE vehicle_id=?";
+    private static final String SELECT_ALL = "SELECT * FROM vehicle_has_vehicle_feature";
+    private static final String INSERT_VALUES = "INSERT INTO vehicle_has_vehicle_feature (vehicle_id, vehicle_feature_id) VALUES (?, ?)";
+    private static final String UPDATE_VALUE = "UPDATE vehicle_has_vehicle_feature SET vehicle_id=?, vehicle_feature_id=? WHERE vehicle_id=?";
+    private static final String DELETE_VALUE = "DELETE FROM vehicle_has_vehicle_feature WHERE vehicle_id=?";
 
     @Override
-    public Boolean findById(int vehicleId) {
-        System.out.println("Finding record with vehicleId: " + vehicleId + "...");
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM vehicle_has_vehicle_feature WHERE vehicle_id = ?");
+    public VehicleHasVehicleFeature get(int vehicleId) {
+        logger.info("Finding record with vehicleId: " + vehicleId + "...");
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(FIND_BY_ID)) {
             preparedStatement.setInt(1, vehicleId);
             ResultSet result = preparedStatement.executeQuery();
-            boolean recordExists = result.next();
-            System.out.println("------------------------------------------------");
-            return recordExists;
+            if (result.next()) {
+                int foundVehicleId = result.getInt("vehicle_id");
+                int vehicleFeatureId = result.getInt("vehicle_feature_id");
+                return new VehicleHasVehicleFeature(foundVehicleId, vehicleFeatureId);
+            } else {
+                logger.info("No record found. Invalid vehicleId");
+            }
         } catch (SQLException se) {
-            System.out.println("Error finding record. Invalid vehicleId");
-            System.out.println("------------------------------------------------");
-            return false;
+            logger.info("Error finding record. Invalid vehicleId");
+            se.printStackTrace();
         }
+        return null;
     }
 
     @Override
-    public ArrayList<VehicleHasVehicleFeature> selectAll() {
-        System.out.println("Displaying all rows from vehicle_has_vehicle_feature table");
+    public ArrayList<VehicleHasVehicleFeature> get() {
+        logger.info("Displaying all rows from vehicle_has_vehicle_feature table");
         ArrayList<VehicleHasVehicleFeature> records = new ArrayList<>();
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM vehicle_has_vehicle_feature");
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(SELECT_ALL)) {
             ResultSet result = preparedStatement.executeQuery();
             while (result.next()) {
                 int vehicleId = result.getInt("vehicle_id");
@@ -40,60 +50,53 @@ public class MySQLVehicleHasVehicleFeatureDAO extends AbstractDAO<VehicleHasVehi
                 VehicleHasVehicleFeature record = new VehicleHasVehicleFeature(vehicleId, vehicleFeatureId);
                 records.add(record);
             }
-            System.out.println(records);
+            logger.info(records);
             return records;
         } catch (SQLException e) {
-            System.out.println("Error");
+            logger.info("Error executing SQL query");
             e.printStackTrace();
         }
         return null;
     }
 
     @Override
-    public void addNewRow(VehicleHasVehicleFeature row) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            String insertValueStatement = "INSERT INTO vehicle_has_vehicle_feature(vehicle_id, vehicle_feature_id) VALUES (?, ?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(insertValueStatement);
-            preparedStatement.setInt(1, row.getVehicleId());
-            preparedStatement.setInt(2, row.getVehicleFeatureId());
+    public void add(VehicleHasVehicleFeature record) {
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(INSERT_VALUES)) {
+            preparedStatement.setInt(1, record.getVehicleId());
+            preparedStatement.setInt(2, record.getVehicleFeatureId());
             preparedStatement.executeUpdate();
-            System.out.println("Insertion complete");
+            logger.info("Insertion complete");
         } catch (SQLException e) {
-            System.out.println("Error");
+            logger.info("Error executing SQL query");
             e.printStackTrace();
         }
     }
 
     @Override
-    public void update(VehicleHasVehicleFeature recordToUpdate, int vehicleId) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            String updateStatement = "UPDATE vehicle_has_vehicle_feature SET vehicle_id = ?, vehicle_feature_id = ? WHERE vehicle_id = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(updateStatement);
-            preparedStatement.setInt(1, recordToUpdate.getVehicleId());
-            preparedStatement.setInt(2, recordToUpdate.getVehicleFeatureId());
+    public void update(VehicleHasVehicleFeature record, int vehicleId) {
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(UPDATE_VALUE)) {
+            preparedStatement.setInt(1, record.getVehicleId());
+            preparedStatement.setInt(2, record.getVehicleFeatureId());
             preparedStatement.setInt(3, vehicleId);
             preparedStatement.executeUpdate();
-            System.out.println("Update complete");
+            logger.info("Update complete");
         } catch (SQLException e) {
-            System.out.println("Error");
+            logger.info("Error executing SQL query");
             e.printStackTrace();
         }
     }
 
     @Override
     public void delete(int vehicleId) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            if (findById(vehicleId)) {
-                String deleteStatement = "DELETE FROM vehicle_has_vehicle_feature WHERE vehicle_id = ?";
-                PreparedStatement preparedStatement = connection.prepareStatement(deleteStatement);
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(DELETE_VALUE)) {
+            if (get(vehicleId) != null) {
                 preparedStatement.setInt(1, vehicleId);
                 preparedStatement.executeUpdate();
-                System.out.println("Deletion complete");
+                logger.info("Deletion complete");
             }
         } catch (SQLException e) {
-            System.out.println("Deletion unsuccessful!");
+            logger.info("Error executing SQL query");
             e.printStackTrace();
         }
     }
-
 }

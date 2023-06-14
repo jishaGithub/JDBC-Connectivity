@@ -2,19 +2,24 @@ package com.solvd.laba.db.dao.MySQLDAO;
 
 import com.solvd.laba.db.dao.AbstractDAO;
 import com.solvd.laba.db.model.Insurance;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.*;
 import java.util.ArrayList;
 
 public class MySQLInsuranceDAO extends AbstractDAO<Insurance> {
-    public MySQLInsuranceDAO() {
-        ConfigFileDAO.loadPropertyConfigFile();
-    }
+    private static final Logger logger = LogManager.getLogger(MySQLInsuranceDAO.class);
+    private final static String GET_BY_ID = "SELECT * FROM insurance WHERE id=?";
+    private final static String GET_ALL = "SELECT * FROM insurance";
+    private final static String INSERT_VALUES = "INSERT INTO insurance (insurance_name, coverage, customer_id) VALUES (?, ?, ?)";
+    private final static String UPDATE_VALUE = "UPDATE insurance SET insurance_name=?, coverage=?, customer_id=? WHERE id=?";
+    private final static String DELETE_VALUE = "DELETE FROM insurance WHERE id=?";
 
     @Override
-    public Boolean findById(int id) {
-        System.out.println("Finding record of ID: " + id + "...");
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM insurance WHERE id=?");
+    public Insurance get(int id) {
+        logger.info("Finding record of ID: " + id + "...");
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(GET_BY_ID)) {
             preparedStatement.setInt(1, id);
             ResultSet result = preparedStatement.executeQuery();
             if (result.next()) {
@@ -22,27 +27,22 @@ public class MySQLInsuranceDAO extends AbstractDAO<Insurance> {
                 String insuranceName = result.getString("insurance_name");
                 double coverage = result.getDouble("coverage");
                 int customerId = result.getInt("customer_id");
-                Insurance insurance = new Insurance(insuranceId, insuranceName, coverage, customerId);
-                System.out.println(insurance);
-                System.out.println();
-                return true;
+                return new Insurance(insuranceId, insuranceName, coverage, customerId);
             } else {
-                System.out.println("No record found. Invalid ID");
-                System.out.println();
+                logger.info("No record found. Invalid ID");
             }
         } catch (SQLException e) {
-            System.out.println("Error executing SQL query");
+            logger.info("Error executing SQL query");
             e.printStackTrace();
         }
-        return false;
+        return null;
     }
 
     @Override
-    public ArrayList<Insurance> selectAll() {
-        System.out.println("Displaying all the rows from insurance table");
+    public ArrayList<Insurance> get() {
+        logger.info("Displaying all the rows from insurance table");
         ArrayList<Insurance> insurances = new ArrayList<>();
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM insurance");
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(GET_ALL)) {
             ResultSet result = preparedStatement.executeQuery();
             while (result.next()) {
                 int insuranceId = result.getInt("id");
@@ -52,60 +52,54 @@ public class MySQLInsuranceDAO extends AbstractDAO<Insurance> {
                 Insurance insurance = new Insurance(insuranceId, insuranceName, coverage, customerId);
                 insurances.add(insurance);
             }
-            System.out.println(insurances);
+            logger.info(insurances);
             return insurances;
         } catch (SQLException e) {
-            System.out.println("Error executing SQL query");
+            logger.info("Error executing SQL query");
             e.printStackTrace();
         }
         return null;
     }
 
     @Override
-    public void addNewRow(Insurance insurance) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            String insertValueStatement = "INSERT INTO insurance (insurance_name, coverage, customer_id) VALUES (?, ?, ?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(insertValueStatement);
+    public void add(Insurance insurance) {
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(INSERT_VALUES)) {
             preparedStatement.setString(1, insurance.getInsuranceName());
             preparedStatement.setDouble(2, insurance.getCoverage());
             preparedStatement.setInt(3, insurance.getCustomerId());
             preparedStatement.executeUpdate();
-            System.out.println("Insertion complete");
+            logger.info("Insertion complete");
         } catch (SQLException e) {
-            System.out.println("Error executing SQL query");
+            logger.info("Error executing SQL query");
             e.printStackTrace();
         }
     }
 
     @Override
     public void update(Insurance insurance, int id) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            String updateStatement = "UPDATE insurance SET insurance_name=?, coverage=?, customer_id=? WHERE id=?";
-            PreparedStatement preparedStatement = connection.prepareStatement(updateStatement);
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(UPDATE_VALUE)) {
             preparedStatement.setString(1, insurance.getInsuranceName());
             preparedStatement.setDouble(2, insurance.getCoverage());
             preparedStatement.setInt(3, insurance.getCustomerId());
             preparedStatement.setInt(4, id);
             preparedStatement.executeUpdate();
-            System.out.println("Update complete");
+            logger.info("Update complete");
         } catch (SQLException e) {
-            System.out.println("Error executing SQL query");
+            logger.info("Error executing SQL query");
             e.printStackTrace();
         }
     }
 
     @Override
     public void delete(int id) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            if (findById(id)) {
-                String deleteStatement = "DELETE FROM insurance WHERE id=?";
-                PreparedStatement preparedStatement = connection.prepareStatement(deleteStatement);
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(DELETE_VALUE)) {
+            if (get(id) != null) {
                 preparedStatement.setInt(1, id);
                 preparedStatement.executeUpdate();
-                System.out.println("Deletion complete");
+                logger.info("Deletion complete");
             }
         } catch (SQLException e) {
-            System.out.println("Error executing SQL query");
+            logger.info("Error executing SQL query");
             e.printStackTrace();
         }
     }

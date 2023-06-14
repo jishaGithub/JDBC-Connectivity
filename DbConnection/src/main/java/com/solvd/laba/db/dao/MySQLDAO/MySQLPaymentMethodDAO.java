@@ -2,45 +2,47 @@ package com.solvd.laba.db.dao.MySQLDAO;
 
 import com.solvd.laba.db.dao.AbstractDAO;
 import com.solvd.laba.db.model.PaymentMethod;
-import java.sql.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class MySQLPaymentMethodDAO extends AbstractDAO<PaymentMethod> {
-    public MySQLPaymentMethodDAO() {
-        ConfigFileDAO.loadPropertyConfigFile();
-    }
+    private static final Logger logger = LogManager.getLogger(MySQLPaymentMethodDAO.class);
+    private final static String GET_BY_ID = "SELECT * FROM payment_method WHERE id=?";
+    private final static String GET_ALL = "SELECT * FROM payment_method";
+    private final static String INSERT_VALUE = "INSERT INTO payment_method (payment_type) VALUES (?)";
+    private final static String UPDATE_VALUE = "UPDATE payment_method SET payment_type=? WHERE id=?";
+    private final static String DELETE_VALUE = "DELETE FROM payment_method WHERE id=?";
 
     @Override
-    public Boolean findById(int id) {
-        System.out.println("Finding record of ID: " + id + "...");
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM payment_method WHERE id=?");
+    public PaymentMethod get(int id) {
+        logger.info("Finding record of ID: " + id + "...");
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(GET_BY_ID)) {
             preparedStatement.setInt(1, id);
             ResultSet result = preparedStatement.executeQuery();
             if (result.next()) {
                 int paymentMethodId = result.getInt("id");
                 String paymentType = result.getString("payment_type");
-                PaymentMethod paymentMethod = new PaymentMethod(paymentMethodId, paymentType);
-                System.out.println(paymentMethod);
-                System.out.println();
-                return true;
+                return new PaymentMethod(paymentMethodId, paymentType);
             } else {
-                System.out.println("No record found. Invalid ID");
-                System.out.println();
+                logger.info("No record found. Invalid ID");
             }
         } catch (SQLException e) {
-            System.out.println("Error executing SQL query");
+            logger.info("Error executing SQL query");
             e.printStackTrace();
         }
-        return false;
+        return null;
     }
 
     @Override
-    public ArrayList<PaymentMethod> selectAll() {
-        System.out.println("Displaying all the rows from payment_method table");
+    public ArrayList<PaymentMethod> get() {
+        logger.info("Displaying all the rows from payment_method table");
         ArrayList<PaymentMethod> paymentMethods = new ArrayList<>();
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM payment_method");
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(GET_ALL)) {
             ResultSet result = preparedStatement.executeQuery();
             while (result.next()) {
                 int paymentMethodId = result.getInt("id");
@@ -48,60 +50,51 @@ public class MySQLPaymentMethodDAO extends AbstractDAO<PaymentMethod> {
                 PaymentMethod paymentMethod = new PaymentMethod(paymentMethodId, paymentType);
                 paymentMethods.add(paymentMethod);
             }
-            System.out.println(paymentMethods);
+            logger.info(paymentMethods);
             return paymentMethods;
         } catch (SQLException e) {
-            System.out.println("Error executing SQL query");
+            logger.info("Error executing SQL query");
             e.printStackTrace();
         }
         return null;
     }
 
     @Override
-    public void addNewRow(PaymentMethod paymentMethod) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            String insertValueStatement = "INSERT INTO payment_method (payment_type) VALUES (?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(insertValueStatement);
+    public void add(PaymentMethod paymentMethod) {
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(INSERT_VALUE)) {
             preparedStatement.setString(1, paymentMethod.getPaymentType());
             preparedStatement.executeUpdate();
-            System.out.println("Insertion complete");
+            logger.info("Insertion complete");
         } catch (SQLException e) {
-            System.out.println("Error executing SQL query");
+            logger.info("Error executing SQL query");
             e.printStackTrace();
         }
     }
 
     @Override
     public void update(PaymentMethod paymentMethod, int id) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            if (findById(id)) {
-                String updateStatement = "UPDATE payment_method SET payment_type=? WHERE id=?";
-                PreparedStatement preparedStatement = connection.prepareStatement(updateStatement);
-                preparedStatement.setString(1, paymentMethod.getPaymentType());
-                preparedStatement.setInt(2, id);
-                preparedStatement.executeUpdate();
-                System.out.println("Update complete");
-            }
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(UPDATE_VALUE)) {
+            preparedStatement.setString(1, paymentMethod.getPaymentType());
+            preparedStatement.setInt(2, id);
+            preparedStatement.executeUpdate();
+            logger.info("Update complete");
         } catch (SQLException e) {
-            System.out.println("Error executing SQL query");
+            logger.info("Error executing SQL query");
             e.printStackTrace();
         }
     }
 
     @Override
     public void delete(int id) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            if (findById(id)) {
-                String deleteStatement = "DELETE FROM payment_method WHERE id=?";
-                PreparedStatement preparedStatement = connection.prepareStatement(deleteStatement);
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(DELETE_VALUE)) {
+            if (get(id) != null) {
                 preparedStatement.setInt(1, id);
                 preparedStatement.executeUpdate();
-                System.out.println("Deletion complete");
+                logger.info("Deletion complete");
             }
         } catch (SQLException e) {
-            System.out.println("Error executing SQL query");
+            logger.info("Error executing SQL query");
             e.printStackTrace();
         }
     }
-
 }

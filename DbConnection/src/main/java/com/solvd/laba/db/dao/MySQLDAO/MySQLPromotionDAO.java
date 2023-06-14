@@ -2,20 +2,28 @@ package com.solvd.laba.db.dao.MySQLDAO;
 
 import com.solvd.laba.db.dao.AbstractDAO;
 import com.solvd.laba.db.model.Promotion;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.math.BigDecimal;
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class MySQLPromotionDAO extends AbstractDAO<Promotion> {
-    public MySQLPromotionDAO() {
-        ConfigFileDAO.loadPropertyConfigFile();
-    }
+    private static final Logger logger = LogManager.getLogger(MySQLPromotionDAO.class);
+    private final static String GET_BY_ID = "SELECT * FROM promotion WHERE id=?";
+    private final static String GET_ALL = "SELECT * FROM promotion";
+    private final static String INSERT_VALUES = "INSERT INTO promotion (promotion_name, discount, start_date, end_date) VALUES (?, ?, ?, ?)";
+    private final static String UPDATE_VALUE = "UPDATE promotion SET promotion_name=?, discount=?, start_date=?, end_date=? WHERE id=?";
+    private final static String DELETE_VALUE = "DELETE FROM promotion WHERE id=?";
+
     @Override
-    public Boolean findById(int id) {
-        System.out.println("Finding record of ID: " + id + "...");
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM promotion WHERE id=?");
+    public Promotion get(int id) {
+        logger.info("Finding record of ID: " + id + "...");
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(GET_BY_ID)) {
             preparedStatement.setInt(1, id);
             ResultSet result = preparedStatement.executeQuery();
             if (result.next()) {
@@ -26,26 +34,22 @@ public class MySQLPromotionDAO extends AbstractDAO<Promotion> {
                 Date endDate = result.getDate("end_date");
                 Promotion promotion = new Promotion(promotionName, discount, startDate, endDate);
                 promotion.setId(promotionId);
-                System.out.println(promotion);
-                System.out.println();
-                return true;
+                return promotion;
             } else {
-                System.out.println("No record found. Invalid ID");
-                System.out.println();
+                logger.info("No record found. Invalid ID");
             }
         } catch (SQLException e) {
-            System.out.println("Error executing SQL query");
+            logger.info("Error executing SQL query");
             e.printStackTrace();
         }
-        return false;
+        return null;
     }
 
     @Override
-    public ArrayList<Promotion> selectAll() {
-        System.out.println("Displaying all the rows from promotion table");
+    public ArrayList<Promotion> get() {
+        logger.info("Displaying all the rows from promotion table");
         ArrayList<Promotion> promotions = new ArrayList<>();
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM promotion");
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(GET_ALL)) {
             ResultSet result = preparedStatement.executeQuery();
             while (result.next()) {
                 int promotionId = result.getInt("id");
@@ -57,66 +61,57 @@ public class MySQLPromotionDAO extends AbstractDAO<Promotion> {
                 promotion.setId(promotionId);
                 promotions.add(promotion);
             }
-            System.out.println(promotions);
+            logger.info(promotions);
             return promotions;
         } catch (SQLException e) {
-            System.out.println("Error executing SQL query");
+            logger.info("Error executing SQL query");
             e.printStackTrace();
         }
         return null;
     }
 
     @Override
-    public void addNewRow(Promotion promotion) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            String insertValueStatement = "INSERT INTO promotion (promotion_name, discount, start_date, end_date) VALUES (?, ?, ?, ?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(insertValueStatement);
+    public void add(Promotion promotion) {
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(INSERT_VALUES)) {
             preparedStatement.setString(1, promotion.getPromotionName());
             preparedStatement.setBigDecimal(2, promotion.getDiscount());
             preparedStatement.setDate(3, new java.sql.Date(promotion.getStartDate().getTime()));
             preparedStatement.setDate(4, new java.sql.Date(promotion.getEndDate().getTime()));
             preparedStatement.executeUpdate();
-            System.out.println("New row added");
+            logger.info("Insertion complete");
         } catch (SQLException e) {
-            System.out.println("Error executing SQL query");
+            logger.info("Error executing SQL query");
             e.printStackTrace();
         }
     }
 
     @Override
-    public void update(Promotion promotion,int id) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            if (findById(promotion.getId())) {
-                String updateStatement = "UPDATE promotion SET promotion_name=?, discount=?, start_date=?, end_date=? WHERE id=?";
-                PreparedStatement preparedStatement = connection.prepareStatement(updateStatement);
-                preparedStatement.setString(1, promotion.getPromotionName());
-                preparedStatement.setBigDecimal(2, promotion.getDiscount());
-                preparedStatement.setDate(3, new java.sql.Date(promotion.getStartDate().getTime()));
-                preparedStatement.setDate(4, new java.sql.Date(promotion.getEndDate().getTime()));
-                preparedStatement.setInt(5, promotion.getId());
-                preparedStatement.executeUpdate();
-                System.out.println("Update complete");
-            }
+    public void update(Promotion promotion, int id) {
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(UPDATE_VALUE)) {
+            preparedStatement.setString(1, promotion.getPromotionName());
+            preparedStatement.setBigDecimal(2, promotion.getDiscount());
+            preparedStatement.setDate(3, new java.sql.Date(promotion.getStartDate().getTime()));
+            preparedStatement.setDate(4, new java.sql.Date(promotion.getEndDate().getTime()));
+            preparedStatement.setInt(5, id);
+            preparedStatement.executeUpdate();
+            logger.info("Update complete");
         } catch (SQLException e) {
-            System.out.println("Error executing SQL query");
+            logger.info("Error executing SQL query");
             e.printStackTrace();
         }
     }
 
     @Override
     public void delete(int id) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            if (findById(id)) {
-                String deleteStatement = "DELETE FROM promotion WHERE id=?";
-                PreparedStatement preparedStatement = connection.prepareStatement(deleteStatement);
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(DELETE_VALUE)) {
+            if (get(id) != null) {
                 preparedStatement.setInt(1, id);
                 preparedStatement.executeUpdate();
-                System.out.println("Deletion complete");
+                logger.info("Deletion complete");
             }
         } catch (SQLException e) {
-            System.out.println("Error executing SQL query");
+            logger.info("Error executing SQL query");
             e.printStackTrace();
         }
     }
-
 }

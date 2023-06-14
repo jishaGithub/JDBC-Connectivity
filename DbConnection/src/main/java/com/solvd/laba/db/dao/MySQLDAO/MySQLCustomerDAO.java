@@ -2,45 +2,43 @@ package com.solvd.laba.db.dao.MySQLDAO;
 
 import com.solvd.laba.db.dao.AbstractDAO;
 import com.solvd.laba.db.model.Customer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.sql.*;
 import java.util.ArrayList;
 
 public class MySQLCustomerDAO extends AbstractDAO<Customer> {
-    public MySQLCustomerDAO() {
-        ConfigFileDAO.loadPropertyConfigFile();
-    }
+    private static final Logger logger = LogManager.getLogger(MySQLCustomerDAO.class);
+    private final static String GET_BY_ID = "SELECT * FROM customer WHERE id=?";
+    private final static String GET_ALL = "SELECT * FROM customer";
+    private final static String INSERT_VALUES = "INSERT INTO customer(first_name, last_name, phone_number, email, age) VALUES (?, ?, ?, ?, ?)";
+    private final static String UPDATE_VALUE = "UPDATE customer SET first_name=?, last_name=?, phone_number=?, email=?, age=? WHERE id=?";
+    private final static String DELETE_VALUE = "DELETE FROM customer WHERE id=?";
 
     @Override
-    public Boolean findById(int id1) {
-        System.out.println("Finding record of ID:" + id1 + ".....");
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM customer where id=?");
-            preparedStatement.setInt(1, id1);
+    public Customer get(int id) {
+        logger.info("Finding record of ID: " + id + ".....");
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(GET_BY_ID)) {
+            preparedStatement.setInt(1, id);
             ResultSet result = preparedStatement.executeQuery();
             result.next();
-            int id = result.getInt("id");
             String firstName = result.getString("first_name");
             String lastName = result.getString("last_name");
             String phoneNumber = result.getString("phone_number");
             String email = result.getString("email");
             int age = result.getInt("age");
-            Customer customer1 = new Customer(id, firstName, lastName, email, phoneNumber, age);
-            System.out.println(customer1);
-            System.out.println(" ");
-            return true;
+            return new Customer(firstName, lastName, email, phoneNumber, age);
         } catch (SQLException se) {
-            System.out.println("No record found. Invalid ID");
-            System.out.println(" ");
-            return false;
+            logger.info("No record found. Invalid ID");
+            return null;
         }
     }
 
     @Override
-    public ArrayList<Customer> selectAll() {
-        System.out.println("Displaying all the rows from customer table");
+    public ArrayList<Customer> get() {
+        logger.info("Displaying all the rows from customer table");
         ArrayList<Customer> customers = new ArrayList<>();
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM customer");
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(GET_ALL)) {
             ResultSet result = preparedStatement.executeQuery();
             while (result.next()) {
                 int id = result.getInt("id");
@@ -52,39 +50,32 @@ public class MySQLCustomerDAO extends AbstractDAO<Customer> {
                 Customer customer = new Customer(id, firstName, lastName, email, phoneNumber, age);
                 customers.add(customer);
             }
-            System.out.println(customers);
+            logger.info(customers);
             return customers;
         } catch (SQLException e) {
-            System.out.println("Error");
-            e.printStackTrace();
+            logger.info("Error:"+e.getMessage());
         }
         return null;
     }
 
     @Override
-    public void addNewRow(Customer row) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            String insertValueStatement = "INSERT INTO customer(first_name,last_name,phone_number,email,age) VALUES (?,?,?,?,?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(insertValueStatement);
+    public void add(Customer row) {
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(INSERT_VALUES)) {
             preparedStatement.setString(1, row.getFirstName());
             preparedStatement.setString(2, row.getLastName());
             preparedStatement.setString(3, row.getPhoneNumber());
             preparedStatement.setString(4, row.getEmail());
             preparedStatement.setInt(5, row.getAge());
             preparedStatement.executeUpdate();
-            System.out.println("Insertion complete");
-            System.out.println(selectAll());
+            logger.info("Insertion complete");
         } catch (SQLException e) {
-            System.out.println("Error");
-            e.printStackTrace();
+            logger.info("Error:"+e.getMessage());
         }
     }
 
     @Override
     public void update(Customer customer, int id) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            String updateStatement = "UPDATE customer SET first_name=?,last_name=?,phone_number=?,email=?,age=? WHERE id=?";
-            PreparedStatement preparedStatement = connection.prepareStatement(updateStatement);
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(UPDATE_VALUE)) {
             preparedStatement.setString(1, customer.getFirstName());
             preparedStatement.setString(2, customer.getLastName());
             preparedStatement.setString(3, customer.getPhoneNumber());
@@ -92,29 +83,22 @@ public class MySQLCustomerDAO extends AbstractDAO<Customer> {
             preparedStatement.setInt(5, customer.getAge());
             preparedStatement.setInt(6, id);
             preparedStatement.executeUpdate();
-            System.out.println("Update complete");
-            System.out.println(selectAll());
+            logger.info("Update complete");
         } catch (SQLException e) {
-            System.out.println("Error");
-            e.printStackTrace();
+            logger.info("Error:"+e.getMessage());
         }
     }
 
     @Override
     public void delete(int id) {
-        try (Connection connection = ConfigFileDAO.getDataSource().getConnection()) {
-            if (findById(id)) {
-                String deleteStatement = "DELETE from customer WHERE id=?";
-                PreparedStatement preparedStatement = connection.prepareStatement(deleteStatement);
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(DELETE_VALUE)) {
+            if (get(id) != null) {
                 preparedStatement.setInt(1, id);
                 preparedStatement.executeUpdate();
-                System.out.println("Deletion complete");
-                System.out.println(selectAll());
+                logger.info("Deletion complete");
             }
         } catch (SQLException e) {
-            System.out.println("Deletion unsuccessful!");
-            e.printStackTrace();
+            logger.info("Deletion unsuccessful!"+e.getMessage());
         }
     }
-
 }
