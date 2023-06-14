@@ -7,7 +7,6 @@ import com.solvd.laba.db.model.Employee;
 import com.solvd.laba.db.service.MySQLService.*;
 import com.solvd.laba.db.xml.parser.XMLParser;
 import com.solvd.laba.db.xml.validation.XMLValidator;
-
 import java.sql.SQLException;
 
 public class Main {
