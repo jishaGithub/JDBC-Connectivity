@@ -13,17 +13,17 @@ public class PaymentMethodService implements DAOService<PaymentMethod> {
 
     @Override
     public void findById(int id) {
-        paymentMethodDAO.findById(id);
+        paymentMethodDAO.get(id);
     }
 
     @Override
     public void selectAll() {
-        paymentMethodDAO.selectAll();
+        paymentMethodDAO.get();
     }
 
     @Override
     public void newRow(PaymentMethod paymentMethod) {
-        paymentMethodDAO.addNewRow(paymentMethod);
+        paymentMethodDAO.add(paymentMethod);
     }
 
     @Override

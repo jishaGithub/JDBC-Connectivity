@@ -11,7 +11,6 @@ public class CustomerAuthentication {
         this.password = password;
         this.customerId = customerId;
     }
-
     public CustomerAuthentication(int id, String userName, String password, Integer customerId) {
         this.id = id;
         this.userName = userName;

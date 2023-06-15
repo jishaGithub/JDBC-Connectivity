@@ -13,17 +13,17 @@ public class CustomerAuthenticationService implements DAOService<CustomerAuthent
 
     @Override
     public void findById(int id) {
-        customerAuthenticationDAO.findById(id);
+        customerAuthenticationDAO.get(id);
     }
 
     @Override
     public void selectAll() {
-        customerAuthenticationDAO.selectAll();
+        customerAuthenticationDAO.get();
     }
 
     @Override
     public void newRow(CustomerAuthentication customerAuthentication) {
-        customerAuthenticationDAO.addNewRow(customerAuthentication);
+        customerAuthenticationDAO.add(customerAuthentication);
     }
 
     @Override

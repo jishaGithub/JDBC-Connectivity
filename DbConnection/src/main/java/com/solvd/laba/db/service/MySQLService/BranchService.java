@@ -15,17 +15,17 @@ public class BranchService implements DAOService<Branch> {
 
     @Override
     public void findById(int id) {
-        branchDAO.findById(id);
+        branchDAO.get(id);
     }
 
     @Override
     public void selectAll() {
-        branchDAO.selectAll();
+        branchDAO.get();
     }
 
     @Override
     public void newRow(Branch branch) {
-        branchDAO.addNewRow(branch);
+        branchDAO.add(branch);
     }
 
     @Override

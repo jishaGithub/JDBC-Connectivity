@@ -4,6 +4,7 @@ import com.solvd.laba.db.dao.AbstractDAO;
 import com.solvd.laba.db.model.BranchLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -88,7 +89,8 @@ public class MySQLBranchLocationDAO extends AbstractDAO<BranchLocation> {
             preparedStatement.executeUpdate();
             logger.info("Update complete");
         } catch (SQLException e) {
-            logger.info("Error executing SQL query:"+e.getMessage());
+            logger.info("Error executing SQL query:"+e.getMessage().substring(0,5));
+            logger.info("Error!"+branchLocation.getId()+" is null. Use another non-null id");
         }
     }
 

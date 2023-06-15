@@ -13,17 +13,17 @@ public class VehicleCategoryService implements DAOService<VehicleCategory> {
 
     @Override
     public void findById(int id) {
-        vehicleCategoryDAO.findById(id);
+        vehicleCategoryDAO.get(id);
     }
 
     @Override
     public void selectAll() {
-        vehicleCategoryDAO.selectAll();
+        vehicleCategoryDAO.get();
     }
 
     @Override
     public void newRow(VehicleCategory vehicleCategory) {
-        vehicleCategoryDAO.addNewRow(vehicleCategory);
+        vehicleCategoryDAO.add(vehicleCategory);
     }
 
     @Override

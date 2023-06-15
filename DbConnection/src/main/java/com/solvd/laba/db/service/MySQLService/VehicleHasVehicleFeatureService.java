@@ -13,17 +13,17 @@ public class VehicleHasVehicleFeatureService implements DAOService<VehicleHasVeh
 
     @Override
     public void findById(int id) {
-        vehicleHasVehicleFeatureDAO.findById(id);
+        vehicleHasVehicleFeatureDAO.get(id);
     }
 
     @Override
     public void selectAll() {
-        vehicleHasVehicleFeatureDAO.selectAll();
+        vehicleHasVehicleFeatureDAO.get();
     }
 
     @Override
     public void newRow(VehicleHasVehicleFeature vehicleHasVehicleFeature) {
-        vehicleHasVehicleFeatureDAO.addNewRow(vehicleHasVehicleFeature);
+        vehicleHasVehicleFeatureDAO.add(vehicleHasVehicleFeature);
     }
 
     @Override

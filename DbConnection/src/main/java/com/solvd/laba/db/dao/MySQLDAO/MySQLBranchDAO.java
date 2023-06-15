@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 
 public class MySQLBranchDAO extends AbstractDAO<Branch> {
@@ -81,9 +82,8 @@ public class MySQLBranchDAO extends AbstractDAO<Branch> {
             preparedStatement.setInt(3, id);
             preparedStatement.executeUpdate();
             logger.info("Update complete");
-        } catch (SQLException e) {
-            logger.info("Error");
-            e.printStackTrace();
+        } catch (SQLException si) {
+            logger.info("Error!"+branch.getId()+" is null. Use another non-null id");
         }
     }
 

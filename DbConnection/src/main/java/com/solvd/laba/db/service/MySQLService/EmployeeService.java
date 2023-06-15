@@ -14,17 +14,17 @@ public class EmployeeService implements DAOService<Employee> {
 
     @Override
     public void findById(int id) {
-        employeeDAO.findById(id);
+        employeeDAO.get(id);
     }
 
     @Override
     public void selectAll() {
-        employeeDAO.selectAll();
+        employeeDAO.get();
     }
 
     @Override
     public void newRow(Employee employee) {
-        employeeDAO.addNewRow(employee);
+        employeeDAO.add(employee);
     }
 
     @Override

@@ -13,17 +13,17 @@ public class RentalRateService implements DAOService<RentalRate> {
 
     @Override
     public void findById(int id) {
-        rentalRateDAO.findById(id);
+        rentalRateDAO.get(id);
     }
 
     @Override
     public void selectAll() {
-        rentalRateDAO.selectAll();
+        rentalRateDAO.get();
     }
 
     @Override
     public void newRow(RentalRate rentalRate) {
-        rentalRateDAO.addNewRow(rentalRate);
+        rentalRateDAO.add(rentalRate);
     }
 
     @Override

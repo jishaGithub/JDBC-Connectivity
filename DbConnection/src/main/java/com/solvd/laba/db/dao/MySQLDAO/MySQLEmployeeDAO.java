@@ -4,6 +4,7 @@ import com.solvd.laba.db.dao.AbstractDAO;
 import com.solvd.laba.db.model.Employee;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -83,11 +84,10 @@ public class MySQLEmployeeDAO extends AbstractDAO<Employee> {
             preparedStatement.setInt(4, id);
             preparedStatement.executeUpdate();
             logger.info("Update complete");
-        } catch (SQLIntegrityConstraintViolationException si) {
-            logger.info("Error! branch_id:"+employee.getBranchId()+" is null in branch table.Use another non-null branch id");
         } catch (SQLException e) {
-            logger.info("Error executing SQL query");
-            e.printStackTrace();
+            logger.info("Error executing SQL query:"+e.getMessage());
+            logger.info("Error! id is null. Use another non-null id");
+
         }
     }
 

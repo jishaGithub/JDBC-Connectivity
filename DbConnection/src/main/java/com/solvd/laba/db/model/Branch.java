@@ -15,7 +15,6 @@ public class Branch {
         this.branchName = branchName;
         this.branchLocationId = branchLocationId;
     }
-
     public int getId() {
         return id;
     }

@@ -13,17 +13,17 @@ public class CustomerService implements DAOService<Customer> {
 
     @Override
     public void findById(int id) {
-        customerDAO.findById(id);
+        customerDAO.get(id);
     }
 
     @Override
     public void selectAll() {
-        customerDAO.selectAll();
+        customerDAO.get();
     }
 
     @Override
     public void newRow(Customer customer) {
-        customerDAO.addNewRow(customer);
+        customerDAO.add(customer);
     }
 
     @Override

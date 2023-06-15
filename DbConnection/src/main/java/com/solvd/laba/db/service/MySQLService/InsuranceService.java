@@ -13,17 +13,17 @@ public class InsuranceService implements DAOService<Insurance> {
 
     @Override
     public void findById(int id) {
-        insuranceDAO.findById(id);
+        insuranceDAO.get(id);
     }
 
     @Override
     public void selectAll() {
-        insuranceDAO.selectAll();
+        insuranceDAO.get();
     }
 
     @Override
     public void newRow(Insurance insurance) {
-        insuranceDAO.addNewRow(insurance);
+        insuranceDAO.add(insurance);
     }
 
     @Override

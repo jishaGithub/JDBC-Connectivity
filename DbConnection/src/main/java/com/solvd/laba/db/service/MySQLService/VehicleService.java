@@ -13,17 +13,17 @@ public class VehicleService implements DAOService<Vehicle> {
 
     @Override
     public void findById(int id) {
-        vehicleDAO.findById(id);
+        vehicleDAO.get(id);
     }
 
     @Override
     public void selectAll() {
-        vehicleDAO.selectAll();
+        vehicleDAO.get();
     }
 
     @Override
     public void newRow(Vehicle vehicle) {
-        vehicleDAO.addNewRow(vehicle);
+        vehicleDAO.add(vehicle);
     }
 
     @Override

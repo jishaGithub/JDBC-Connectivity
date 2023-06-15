@@ -6,24 +6,23 @@ import com.solvd.laba.db.service.DAOService;
 
 public class VehicleFeatureService implements DAOService<VehicleFeature> {
     private MySQLVehicleFeatureDAO vehicleFeatureDAO;
-    
     public VehicleFeatureService(MySQLVehicleFeatureDAO vehicleFeatureDAO) {
         this.vehicleFeatureDAO = vehicleFeatureDAO;
     }
 
     @Override
     public void findById(int id) {
-        vehicleFeatureDAO.findById(id);
+        vehicleFeatureDAO.get(id);
     }
 
     @Override
     public void selectAll() {
-        vehicleFeatureDAO.selectAll();
+        vehicleFeatureDAO.get();
     }
 
     @Override
     public void newRow(VehicleFeature vehicleFeature) {
-        vehicleFeatureDAO.addNewRow(vehicleFeature);
+        vehicleFeatureDAO.add(vehicleFeature);
     }
 
     @Override

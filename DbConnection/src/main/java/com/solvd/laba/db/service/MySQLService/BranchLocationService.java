@@ -13,17 +13,17 @@ public class BranchLocationService implements DAOService<BranchLocation> {
 
     @Override
     public void findById(int id) {
-        branchLocationDAO.findById(id);
+        branchLocationDAO.get(id);
     }
 
     @Override
     public void selectAll() {
-        branchLocationDAO.selectAll();
+        branchLocationDAO.get();
     }
 
     @Override
     public void newRow(BranchLocation branchLocation) {
-        branchLocationDAO.addNewRow(branchLocation);
+        branchLocationDAO.add(branchLocation);
     }
 
     @Override
