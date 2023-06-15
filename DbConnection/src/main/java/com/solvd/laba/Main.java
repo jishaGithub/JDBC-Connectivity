@@ -5,12 +5,15 @@ import com.solvd.laba.db.dao.MySQLDAO.*;
 import com.solvd.laba.db.model.CustomerAuthentication;
 import com.solvd.laba.db.model.Employee;
 import com.solvd.laba.db.service.MySQLService.*;
+import com.solvd.laba.db.xml.parser.XMLParser;
+import com.solvd.laba.db.xml.validation.XMLValidator;
+
 import java.sql.SQLException;
 
 public class Main {
     public static void main(String[] args) {
         EmployeeService employeeService = new EmployeeService(new MySQLEmployeeDAO());
-        employeeService.findById(2);
+        employeeService.findById(4);
         employeeService.selectAll();
         employeeService.updateRow(new Employee("Jacob","jacob@gmail.com",12),6);
         employeeService.deleteRow(7);
@@ -50,6 +53,13 @@ public class Main {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        String xmlFileName = "src/main/resources/carRentalService.xml";
+        String schemaFileName = "src/main/resources/carRentalService.xsd";
+        XMLValidator xmlValidator = new XMLValidator();
+        xmlValidator.domValidator(xmlFileName, schemaFileName);
+        xmlValidator.SAXValidator(xmlFileName, schemaFileName);
+        xmlValidator.staxValidation(xmlFileName, schemaFileName);
+        XMLParser xmlParser = new XMLParser();
+        xmlParser.domXmlParser();
     }
 }
