@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="carRentalService">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="vehicles"/>
+                <xs:element ref="customers"/>
+                <xs:element ref="rentals"/>
+                <xs:element ref="authentications"/>
+                <xs:element ref="employees"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="vehicles">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="vehicle" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="vehicle">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="brand" type="xs:string"/>
+                <xs:element name="model" type="xs:string"/>
+                <xs:element name="year" type="xs:int"/>
+                <xs:element name="color" type="xs:string"/>
+                <xs:element name="mileage" type="xs:int"/>
+                <xs:element name="licenseNo" type="xs:string"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:int"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="customers">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="customer" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="customer">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="firstName" type="xs:string"/>
+                <xs:element name="lastName" type="xs:string"/>
+                <xs:element name="customerEmail" type="xs:string"/>
+                <xs:element name="phoneNumber" type="xs:long"/>
+                <xs:element name="age" type="xs:int"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:int"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="rentals">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="rental" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="rental">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="vehicleId" type="xs:int"/>
+                <xs:element name="customerId" type="xs:int"/>
+                <xs:element name="startDate" type="xs:date"/>
+                <xs:element name="endDate" type="xs:date"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:int"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="authentications">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="authentication" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="authentication">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userName" type="xs:string"/>
+                <xs:element name="password" type="xs:string"/>
+                <xs:element name="customerId" type="xs:int"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:int"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="employees">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="employee">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="name" type="xs:string"/>
+                            <xs:element name="employeeEmail" type="xs:string"/>
+                            <xs:element name="branchId" type="xs:int"/>
+                        </xs:sequence>
+                        <xs:attribute name="id" type="xs:int" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

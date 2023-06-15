@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<carRentalService>
+    <vehicles>
+        <vehicle id="1">
+            <brand>Honda</brand>
+            <model>Civic</model>
+            <year>2020</year>
+            <color>Black</color>
+            <mileage>23</mileage>
+            <licenseNo>1234567</licenseNo>
+        </vehicle>
+        <vehicle id="2">
+            <brand>Toyota</brand>
+            <model>Corolla</model>
+            <year>2019</year>
+            <color>White</color>
+            <mileage>18</mileage>
+            <licenseNo>9876543</licenseNo>
+        </vehicle>
+    </vehicles>
+    <customers>
+        <customer id="1">
+            <firstName>Sam</firstName>
+            <lastName>Thomas</lastName>
+            <customerEmail>sam@gmail.com</customerEmail>
+            <phoneNumber>6784563456</phoneNumber>
+            <age>23</age>
+        </customer>
+        <customer id="2">
+            <firstName>John</firstName>
+            <lastName>Doe</lastName>
+            <customerEmail>johndoe@gmail.com</customerEmail>
+            <phoneNumber>1234567890</phoneNumber>
+            <age>35</age>
+        </customer>
+    </customers>
+    <rentals>
+        <rental id="1">
+            <vehicleId>1</vehicleId>
+            <customerId>1</customerId>
+            <startDate>2023-06-01</startDate>
+            <endDate>2023-06-05</endDate>
+        </rental>
+        <rental id="2">
+            <vehicleId>2</vehicleId>
+            <customerId>2</customerId>
+            <startDate>2023-06-03</startDate>
+            <endDate>2023-06-07</endDate>
+        </rental>
+    </rentals>
+    <authentications>
+        <authentication id="1">
+            <userName>st2023</userName>
+            <password>1234</password>
+            <customerId>1</customerId>
+        </authentication>
+        <authentication id="2">
+            <userName>sg2023</userName>
+            <password>6756</password>
+            <customerId>2</customerId>
+        </authentication>
+    </authentications>
+    <employees>
+        <employee id="1">
+            <name>John Dave</name>
+            <employeeEmail>john@gmail.com</employeeEmail>
+            <branchId>1</branchId>
+        </employee>
+    </employees>
+</carRentalService>
