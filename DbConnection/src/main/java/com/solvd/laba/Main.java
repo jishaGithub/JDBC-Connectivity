@@ -12,7 +12,7 @@ import java.sql.SQLException;
 
 
 public class Main {
-    public static void main(String[] args) {        
+    public static void main(String[] args) {
         EmployeeService employeeService = new EmployeeService(new MySQLEmployeeDAO());
         employeeService.findById(4);
         employeeService.selectAll();
@@ -53,7 +53,7 @@ public class Main {
             ConfigFileDAO.getDataSource().close();
         } catch (SQLException e) {
             e.printStackTrace();
-        } 
+        }
         String xmlFileName = "src/main/resources/carRentalService.xml";
         String schemaFileName = "src/main/resources/carRentalService.xsd";
         XMLValidator xmlValidator = new XMLValidator();
@@ -61,6 +61,9 @@ public class Main {
         xmlValidator.SAXValidator(xmlFileName, schemaFileName);
         xmlValidator.staxValidation(xmlFileName, schemaFileName);
         XMLParser xmlParser = new XMLParser();
-        xmlParser.domXmlParser();      
+        xmlParser.domXmlParser();
+        JaxBParser jaxBParser = new JaxBParser();
+        jaxBParser.marshalToXml();
+        jaxBParser.parseXmlJaxB(xmlFileName);
     }
 }
