@@ -4,7 +4,7 @@ import jakarta.xml.bind.annotation.*;
 
 @XmlRootElement(name = "employee")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Employee {
+public class Employee {    
     @XmlAttribute
     private int id;
     @XmlElement
@@ -15,7 +15,6 @@ public class Employee {
     private int branchId;
 
     public Employee() {
-
     }
 
     public Employee (int id, String name, String email, int branchId) {
