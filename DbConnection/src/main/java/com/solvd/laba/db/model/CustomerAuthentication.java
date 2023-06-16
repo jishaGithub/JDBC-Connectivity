@@ -15,7 +15,6 @@ public class CustomerAuthentication {
     private Integer customerId;
 
     public CustomerAuthentication() {
-
     }
 
     public CustomerAuthentication(String userName, String password, Integer customerId) {
