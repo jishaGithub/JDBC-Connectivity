@@ -9,22 +9,17 @@ public class Customer {
     @XmlAttribute
     private int id;
     @XmlElement
-
     private String firstName;
     @XmlElement
-
     private String lastName;
     @XmlElement(name = "customerEmail")
-
     private String email;
     @XmlElement
-
     private String phoneNumber;
     @XmlElement
-
     private int age;
+    
     public Customer(){
-
     }
 
     public Customer(int id, String firstName, String lastName, String email, String phoneNumber,int age) {
