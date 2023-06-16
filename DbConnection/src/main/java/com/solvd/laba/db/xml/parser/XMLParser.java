@@ -59,7 +59,7 @@ public class XMLParser {
                 logger.info("   Rental = " + id + " " + vehicleId + " " + customerId + " " + startDate + " " + endDate);
             }
             NodeList authentications = carRentalService.getElementsByTagName("customerAuthentication");
-            logger.info("Authentications");
+            logger.info("CustomerAuthentications");
             for (int i = 0; i < authentications.getLength(); i++) {
                 Element authentication = (Element) authentications.item(i);
                 int id = Integer.parseInt(authentication.getAttribute("id"));
