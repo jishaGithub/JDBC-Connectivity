@@ -23,9 +23,10 @@ public class Vehicle {
     private int categoryId;
     @XmlTransient
     private int customerId;
+    
     public Vehicle() {
-
     }
+    
     public Vehicle(String brand, String model, int year, String color, int mileage, String licenseNumber,
                    int categoryId, int customerId) {
         this.brand = brand;
