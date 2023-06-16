@@ -1,17 +1,39 @@
 package com.solvd.laba.db.model;
 
+import com.solvd.laba.db.xml.jaxb.CustomDate;
+import jakarta.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 import java.util.Date;
 
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name= "rental")
 public class Rental {
+
+    @XmlAttribute
     private int id;
+    @XmlElement(name = "rentalDate")
+    @XmlJavaTypeAdapter(CustomDate.class)
     private Date rentalDate;
+    @XmlElement(name = "returnDate")
+    @XmlJavaTypeAdapter(CustomDate.class)
     private Date returnDate;
+    @XmlElement(name ="customerId")
     private int customerId;
+    @XmlTransient
+
     private int insuranceId;
+    @XmlTransient
     private int rentalRateId;
+    @XmlElement(name="vehicleId")
     private int vehicleId;
+    @XmlTransient
     private int promotionId;
+    @XmlTransient
     private int employeeId;
+    public Rental() {
+
+    }
 
     public Rental(int id, Date rentalDate, Date returnDate, int customerId, int insuranceId,
                   int rentalRateId, int vehicleId, int promotionId, int employeeId) {

@@ -1,10 +1,22 @@
 package com.solvd.laba.db.model;
 
+import jakarta.xml.bind.annotation.*;
+
+@XmlRootElement(name = "employee")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Employee {
+    @XmlAttribute
     private int id;
+    @XmlElement
     private String name;
+    @XmlElement(name = "employeeEmail")
     private String email;
+    @XmlElement(name = "branchId")
     private int branchId;
+
+    public Employee() {
+
+    }
 
     public Employee (int id, String name, String email, int branchId) {
         this.id = id;
