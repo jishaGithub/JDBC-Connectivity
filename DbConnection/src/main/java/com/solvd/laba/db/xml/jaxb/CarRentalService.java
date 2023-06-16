@@ -26,7 +26,6 @@ public class CarRentalService {
     private List<Vehicle> vehicles;
 
     public CarRentalService() {
-
     }
 
     public int getId() {
@@ -69,7 +68,6 @@ public class CarRentalService {
         this.rentals = rentals;
     }
 
-
     public List<Customer> getCustomers() {
         return customers;
     }
@@ -77,5 +75,4 @@ public class CarRentalService {
     public void setCustomers(List<Customer> customers) {
         this.customers = customers;
     }
-
 }
