@@ -3,7 +3,6 @@ package com.solvd.laba.db.model;
 import com.solvd.laba.db.xml.jaxb.CustomDate;
 import jakarta.xml.bind.annotation.*;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
 import java.util.Date;
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -21,7 +20,6 @@ public class Rental {
     @XmlElement(name ="customerId")
     private int customerId;
     @XmlTransient
-
     private int insuranceId;
     @XmlTransient
     private int rentalRateId;
@@ -31,8 +29,8 @@ public class Rental {
     private int promotionId;
     @XmlTransient
     private int employeeId;
+    
     public Rental() {
-
     }
 
     public Rental(int id, Date rentalDate, Date returnDate, int customerId, int insuranceId,
