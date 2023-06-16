@@ -50,6 +50,5 @@ public class Main {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 }
