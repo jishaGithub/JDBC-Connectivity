@@ -16,5 +16,4 @@ public class CustomDate extends XmlAdapter<String, Date> {
     public Date unmarshal(String dateString) throws Exception {
         return dateFormat.parse(dateString);
     }
-
 }
