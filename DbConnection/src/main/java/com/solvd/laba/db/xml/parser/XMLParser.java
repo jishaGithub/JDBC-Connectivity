@@ -54,11 +54,11 @@ public class XMLParser {
                 int id = Integer.parseInt(rental.getAttribute("id"));
                 int vehicleId = Integer.parseInt(rental.getElementsByTagName("vehicleId").item(0).getTextContent());
                 int customerId = Integer.parseInt(rental.getElementsByTagName("customerId").item(0).getTextContent());
-                String startDate = rental.getElementsByTagName("startDate").item(0).getTextContent();
-                String endDate = rental.getElementsByTagName("endDate").item(0).getTextContent();
+                String startDate = rental.getElementsByTagName("rentalDate").item(0).getTextContent();
+                String endDate = rental.getElementsByTagName("returnDate").item(0).getTextContent();
                 logger.info("   Rental = " + id + " " + vehicleId + " " + customerId + " " + startDate + " " + endDate);
             }
-            NodeList authentications = carRentalService.getElementsByTagName("authentication");
+            NodeList authentications = carRentalService.getElementsByTagName("customerAuthentication");
             logger.info("Authentications");
             for (int i = 0; i < authentications.getLength(); i++) {
                 Element authentication = (Element) authentications.item(i);
