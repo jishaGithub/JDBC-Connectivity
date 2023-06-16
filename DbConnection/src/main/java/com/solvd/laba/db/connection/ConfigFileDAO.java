@@ -17,8 +17,9 @@ public class ConfigFileDAO {
             dataSource.setUsername(property.getProperty("db.username"));
             dataSource.setPassword(property.getProperty("db.password"));
             dataSource.setInitialSize(5);
-            dataSource.setMaxTotal(10);
+            dataSource.setMaxTotal(15);
             dataSource.setMaxIdle(10);
+            dataSource.setMaxWaitMillis(200);
         } catch (IOException e) {
             System.out.println("Error loading the property file");
         }
