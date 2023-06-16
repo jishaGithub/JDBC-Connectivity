@@ -9,6 +9,7 @@ import java.util.List;
 
 public class JaxBParser {
     private static final Logger logger = LogManager.getLogger(JaxBParser.class);
+    
     public void marshalToXml() {
         Customer customer = new Customer(1,"Sam","Varghese","sam@gmail.com","3456782345",23);
         try {
