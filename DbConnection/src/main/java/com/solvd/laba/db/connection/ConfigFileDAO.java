@@ -1,11 +1,16 @@
 package com.solvd.laba.db.connection;
 
+import com.solvd.laba.db.dao.MySQLDAO.MySQLBranchDAO;
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
 public class ConfigFileDAO {
+
+    private static final Logger logger = LogManager.getLogger(MySQLBranchDAO.class);
     private static BasicDataSource dataSource;
 
     public static void loadPropertyConfigFile() {
@@ -21,7 +26,7 @@ public class ConfigFileDAO {
             dataSource.setMaxIdle(10);
             dataSource.setMaxWaitMillis(200);
         } catch (IOException e) {
-            System.out.println("Error loading the property file");
+            logger.info("Error loading the property file");
         }
     }
 
