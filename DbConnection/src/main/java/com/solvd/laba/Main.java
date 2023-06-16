@@ -61,6 +61,6 @@ public class Main {
         xmlValidator.SAXValidator(xmlFileName, schemaFileName);
         xmlValidator.staxValidation(xmlFileName, schemaFileName);
         XMLParser xmlParser = new XMLParser();
-        xmlParser.domXmlParser();        
+        xmlParser.domXmlParser();      
     }
 }
