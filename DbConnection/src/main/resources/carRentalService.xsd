@@ -7,7 +7,7 @@
                 <xs:element ref="vehicles"/>
                 <xs:element ref="customers"/>
                 <xs:element ref="rentals"/>
-                <xs:element ref="authentications"/>
+                <xs:element ref="customerAuthentications"/>
                 <xs:element ref="employees"/>
             </xs:sequence>
         </xs:complexType>
@@ -66,21 +66,21 @@
             <xs:sequence>
                 <xs:element name="vehicleId" type="xs:int"/>
                 <xs:element name="customerId" type="xs:int"/>
-                <xs:element name="startDate" type="xs:date"/>
-                <xs:element name="endDate" type="xs:date"/>
+                <xs:element name="rentalDate" type="xs:date"/>
+                <xs:element name="returnDate" type="xs:date"/>
             </xs:sequence>
             <xs:attribute name="id" type="xs:int"/>
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="authentications">
+    <xs:element name="customerAuthentications">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="authentication" maxOccurs="unbounded"/>
+                <xs:element ref="customerAuthentication" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="authentication">
+    <xs:element name="customerAuthentication">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="userName" type="xs:string"/>

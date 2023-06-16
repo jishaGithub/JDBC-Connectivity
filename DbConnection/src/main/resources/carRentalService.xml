@@ -38,28 +38,28 @@
         <rental id="1">
             <vehicleId>1</vehicleId>
             <customerId>1</customerId>
-            <startDate>2023-06-01</startDate>
-            <endDate>2023-06-05</endDate>
+            <rentalDate>2023-06-01</rentalDate>
+            <returnDate>2023-06-05</returnDate>
         </rental>
         <rental id="2">
             <vehicleId>2</vehicleId>
             <customerId>2</customerId>
-            <startDate>2023-06-03</startDate>
-            <endDate>2023-06-07</endDate>
+            <rentalDate>2023-06-03</rentalDate>
+            <returnDate>2023-06-07</returnDate>
         </rental>
     </rentals>
-    <authentications>
-        <authentication id="1">
+    <customerAuthentications>
+        <customerAuthentication id="1">
             <userName>st2023</userName>
             <password>1234</password>
             <customerId>1</customerId>
-        </authentication>
-        <authentication id="2">
+        </customerAuthentication>
+        <customerAuthentication id="2">
             <userName>sg2023</userName>
             <password>6756</password>
             <customerId>2</customerId>
-        </authentication>
-    </authentications>
+        </customerAuthentication>
+    </customerAuthentications>
     <employees>
         <employee id="1">
             <name>John Dave</name>
