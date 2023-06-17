@@ -9,19 +9,7 @@ public class Vehicle {
     private int mileage;
     private String licenseNumber;
     private int categoryId;
-    private int customerId;
-
-    public Vehicle(String brand, String model, int year, String color, int mileage, String licenseNumber,
-                   int categoryId, int customerId) {
-        this.brand = brand;
-        this.model = model;
-        this.year = year;
-        this.color = color;
-        this.mileage = mileage;
-        this.licenseNumber = licenseNumber;
-        this.categoryId = categoryId;
-        this.customerId = customerId;
-    }
+    private int customerId;   
 
     public Vehicle(int id, String brand, String model, int year, String color, int mileage, String licenseNumber,
                    int categoryId, int customerId) {
