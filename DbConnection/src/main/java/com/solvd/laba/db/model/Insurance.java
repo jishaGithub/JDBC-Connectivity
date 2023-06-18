@@ -11,13 +11,7 @@ public class Insurance {
         this.insuranceName = insuranceName;
         this.coverage = coverage;
         this.customerId = customerId;
-    }
-
-    public Insurance(String insuranceName, double coverage, int customerId) {
-        this.insuranceName = insuranceName;
-        this.coverage = coverage;
-        this.customerId = customerId;
-    }
+    }   
 
     public int getId() {
         return id;

@@ -15,14 +15,7 @@ public class Payment {
         this.totalAmount = totalAmount;
         this.customerId = customerId;
         this.paymentMethodId = paymentMethodId;
-    }
-
-    public Payment(Date paymentDate, double totalAmount, int customerId, int paymentMethodId) {
-        this.paymentDate = paymentDate;
-        this.totalAmount = totalAmount;
-        this.customerId = customerId;
-        this.paymentMethodId = paymentMethodId;
-    }
+    }    
 
     public int getId() {
         return id;

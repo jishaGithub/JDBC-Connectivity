@@ -24,19 +24,7 @@ public class Rental {
         this.vehicleId = vehicleId;
         this.promotionId = promotionId;
         this.employeeId = employeeId;
-    }
-
-    public Rental(Date rentalDate, Date returnDate, int customerId, int insuranceId,
-                  int rentalRateId, int vehicleId, int promotionId, int employeeId) {
-        this.rentalDate = rentalDate;
-        this.returnDate = returnDate;
-        this.customerId = customerId;
-        this.insuranceId = insuranceId;
-        this.rentalRateId = rentalRateId;
-        this.vehicleId = vehicleId;
-        this.promotionId = promotionId;
-        this.employeeId = employeeId;
-    }
+    }   
 
     public int getId() {
         return id;

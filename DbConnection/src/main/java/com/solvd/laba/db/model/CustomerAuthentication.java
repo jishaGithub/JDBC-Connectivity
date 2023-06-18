@@ -4,13 +4,7 @@ public class CustomerAuthentication {
     private int id;
     private String userName;
     private String password;
-    private Integer customerId;
-
-    public CustomerAuthentication(String userName, String password, Integer customerId) {
-        this.userName = userName;
-        this.password = password;
-        this.customerId = customerId;
-    }
+    private Integer customerId;    
 
     public CustomerAuthentication(int id, String userName, String password, Integer customerId) {
         this.id = id;

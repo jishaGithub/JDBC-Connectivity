@@ -15,13 +15,6 @@ public class BranchLocation {
         this.zip = zip;
     }
 
-    public BranchLocation(String street, String city, String state, String zip) {
-        this.street = street;
-        this.city = city;
-        this.state = state;
-        this.zip = zip;
-    }
-
     public int getId() {
         return id;
     }

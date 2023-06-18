@@ -11,13 +11,7 @@ public class Employee {
         this.name = name;
         this.email = email;
         this.branchId = branchId;
-    }
-
-    public Employee (String name, String email, int branchId) {
-        this.name = name;
-        this.email = email;
-        this.branchId = branchId;
-    }
+    }   
 
     public int getId() {
         return id;

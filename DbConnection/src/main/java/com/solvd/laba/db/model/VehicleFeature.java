@@ -12,13 +12,7 @@ public class VehicleFeature {
         this.availability = availability;
         this.additionalCost = additionalCost;
     }
-
-    public VehicleFeature(String name, String availability, Double additionalCost) {
-        this.name = name;
-        this.availability = availability;
-        this.additionalCost = additionalCost;
-    }
-
+   
     public int getId() {
         return id;
     }
