@@ -32,7 +32,7 @@ public class PromotionDAO extends AbstractDAO implements GenericDAO<Promotion> {
                 BigDecimal discount = result.getBigDecimal("discount");
                 Date startDate = result.getDate("start_date");
                 Date endDate = result.getDate("end_date");
-                Promotion promotion = new Promotion(promotionName, discount, startDate, endDate);
+                Promotion promotion = new Promotion(promotionId, promotionName, discount, startDate, endDate);
                 promotion.setId(promotionId);
                 return promotion;
             }
@@ -55,7 +55,7 @@ public class PromotionDAO extends AbstractDAO implements GenericDAO<Promotion> {
                 BigDecimal discount = result.getBigDecimal("discount");
                 Date startDate = result.getDate("start_date");
                 Date endDate = result.getDate("end_date");
-                Promotion promotion = new Promotion(promotionName, discount, startDate, endDate);
+                Promotion promotion = new Promotion(promotionId, promotionName, discount, startDate, endDate);
                 promotion.setId(promotionId);
                 promotions.add(promotion);
             }
