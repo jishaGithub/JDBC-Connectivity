@@ -13,7 +13,7 @@ import org.apache.logging.log4j.Logger;
 import java.sql.SQLException;
 
 public class Main {
-    public static void main(String[] args) { /*
+    public static void main(String[] args) { 
         Logger logger = LogManager.getLogger(VehicleFeatureService.class);
         EmployeeService employeeService = new EmployeeService(new EmployeeDAO());
         employeeService.get(4);
@@ -58,7 +58,7 @@ public class Main {
         xmlValidator.SAXValidator(xmlFileName, schemaFileName);
         xmlValidator.staxValidation(xmlFileName, schemaFileName);
         XMLParser xmlParser = new XMLParser();
-        xmlParser.domXmlParser(); */
+        xmlParser.domXmlParser(); 
         String jsonFileName = "src/main/resources/CarRentalService.json";
         JacksonParser jacksonParser = new JacksonParser();
         jacksonParser.jsonParser(jsonFileName);
