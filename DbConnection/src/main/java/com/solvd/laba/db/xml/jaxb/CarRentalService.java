@@ -10,9 +10,8 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "carRentalService")
 @JsonRootName("carRentalService")
-public class CarRentalService {
+public class CarRentalService {    
     @XmlElement(name ="id")
-    @JsonProperty("id")
     private int id;
     @XmlElementWrapper(name="customers")
     @XmlElement(name="customer")
