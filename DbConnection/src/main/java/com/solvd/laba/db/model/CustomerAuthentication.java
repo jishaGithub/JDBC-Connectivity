@@ -4,7 +4,7 @@ import jakarta.xml.bind.annotation.*;
 
 @XmlRootElement(name = "authentication")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class CustomerAuthentication {
+public class CustomerAuthentication {  
     @XmlAttribute
     private int id;
     @XmlElement(name = "userName", required = true)
@@ -15,13 +15,8 @@ public class CustomerAuthentication {
     private Integer customerId;
 
     public CustomerAuthentication() {
-    }
+    }     
 
-    public CustomerAuthentication(String userName, String password, Integer customerId) {
-        this.userName = userName;
-        this.password = password;
-        this.customerId = customerId;
-    }
     public CustomerAuthentication(int id, String userName, String password, Integer customerId) {
         this.id = id;
         this.userName = userName;

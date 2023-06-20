@@ -8,11 +8,7 @@ public class VehicleCategory {
         this.id = id;
         this.categoryName = categoryName;
     }
-
-    public VehicleCategory(String categoryName) {
-        this.categoryName = categoryName;
-    }
-
+    
     public int getId() {
         return id;
     }
