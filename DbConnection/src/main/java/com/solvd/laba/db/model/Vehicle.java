@@ -34,21 +34,10 @@ public class Vehicle {
     @XmlTransient
     @JsonProperty("customerId")
     private int customerId;
+    
     public Vehicle() {
-
     }
-    public Vehicle(String brand, String model, int year, String color, int mileage, String licenseNumber,
-                   int categoryId, int customerId) {
-        this.brand = brand;
-        this.model = model;
-        this.year = year;
-        this.color = color;
-        this.mileage = mileage;
-        this.licenseNumber = licenseNumber;
-        this.categoryId = categoryId;
-        this.customerId = customerId;
-    }
-
+    
     public Vehicle(int id, String brand, String model, int year, String color, int mileage, String licenseNumber,
                    int categoryId, int customerId) {
         this.id = id;

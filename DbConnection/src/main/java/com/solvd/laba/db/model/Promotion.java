@@ -10,7 +10,8 @@ public class Promotion {
     private Date startDate;
     private Date endDate;
 
-    public Promotion(String promotionName, BigDecimal discount, Date startDate, Date endDate) {
+    public Promotion(int id, String promotionName, BigDecimal discount, Date startDate, Date endDate) {
+        this.id = id;
         this.promotionName = promotionName;
         this.discount = discount;
         this.startDate = startDate;

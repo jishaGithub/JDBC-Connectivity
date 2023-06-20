@@ -9,12 +9,7 @@ public class Branch {
         this.id = id;
         this.branchName = branchName;
         this.branchLocationId = branchLocationId;
-    }
-
-    public Branch(String branchName, int branchLocationId) {
-        this.branchName = branchName;
-        this.branchLocationId = branchLocationId;
-    }
+    }    
 
     public int getId() {
         return id;
