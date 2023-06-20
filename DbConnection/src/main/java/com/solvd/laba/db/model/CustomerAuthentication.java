@@ -1,27 +1,25 @@
 package com.solvd.laba.db.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.xml.bind.annotation.*;
 
 @XmlRootElement(name = "authentication")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class CustomerAuthentication {
     @XmlAttribute
+    @JsonProperty("id")
     private int id;
     @XmlElement(name = "userName", required = true)
+    @JsonProperty("userName")
     private String userName;
     @XmlElement(name = "password", required = true)
+    @JsonProperty("password")
     private String password;
     @XmlElement(name = "customerId")
+    @JsonProperty("customerId")
     private Integer customerId;
 
-    public CustomerAuthentication() {
-    }
-
-    public CustomerAuthentication(String userName, String password, Integer customerId) {
-        this.userName = userName;
-        this.password = password;
-        this.customerId = customerId;
-    }
+    public CustomerAuthentication() {}
     public CustomerAuthentication(int id, String userName, String password, Integer customerId) {
         this.id = id;
         this.userName = userName;
