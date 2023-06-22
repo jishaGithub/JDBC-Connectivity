@@ -15,7 +15,11 @@ public class ConfigFileDAO {
     public static void loadPropertyConfigFile() {
         Properties property = new Properties();
         try (InputStream dbPropertiesStream = ConfigFileDAO.class.getClassLoader().getResourceAsStream("db.properties")) {
-            property.load(dbPropertiesStream);
+            if (dbPropertiesStream != null) {
+                property.load(dbPropertiesStream);
+            } else {
+                logger.error("Unable to load the property file");
+            }
             dataSource = new BasicDataSource();
             dataSource.setUrl(property.getProperty("db.url"));
             dataSource.setUsername(property.getProperty("db.username"));
