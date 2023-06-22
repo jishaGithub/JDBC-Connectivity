@@ -7,8 +7,7 @@ import org.apache.logging.log4j.Logger;
 import com.solvd.laba.db.util.GenericDAO;
 import java.util.ArrayList;
 
-public class VehicleFeatureService implements GenericDAO<VehicleFeature> {
-    private static final Logger logger = LogManager.getLogger(VehicleFeatureService.class);
+public class VehicleFeatureService implements GenericDAO<VehicleFeature> {    
     private VehicleFeatureDAO vehicleFeatureDAO;
 
     public VehicleFeatureService(VehicleFeatureDAO vehicleFeatureDAO) {
