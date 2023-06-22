@@ -32,7 +32,7 @@ public class CustomerAuthenticationDAO extends AbstractDAO implements GenericDAO
             }
             logger.info("No record found. Invalid ID");
         } catch (SQLException e) {
-            logger.info("SQL query error:"+e.getMessage());
+            logger.error("SQL query error:"+e.getMessage());
         }
         return null;
     }
@@ -52,7 +52,7 @@ public class CustomerAuthenticationDAO extends AbstractDAO implements GenericDAO
                 customerAuthList.add(customerAuth);
             }
         } catch (SQLException e) {
-            logger.info("SQL query error:"+e.getMessage());
+            logger.error("SQL query error:"+e.getMessage());
         }
         logger.info(customerAuthList);
         return customerAuthList;
@@ -81,8 +81,8 @@ public class CustomerAuthenticationDAO extends AbstractDAO implements GenericDAO
             preparedStatement.executeUpdate();
             logger.info("Update complete");
         } catch (SQLException e) {
-            logger.info("Update error:"+e.getMessage());
-            logger.info("Error! id is null. Use another non-null id");
+            logger.error("Update error:"+e.getMessage());
+            logger.error("Error! id is null. Use another non-null id");
         }
     }
 
@@ -93,7 +93,7 @@ public class CustomerAuthenticationDAO extends AbstractDAO implements GenericDAO
             preparedStatement.executeUpdate();
             logger.info("Deletion complete");
         } catch (SQLException e) {
-            logger.info("Error executing SQL query:"+e.getMessage());
+            logger.error("Error executing SQL query:"+e.getMessage());
         }
     }
 }

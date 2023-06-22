@@ -33,7 +33,7 @@ public class VehicleCategoryDAO extends AbstractDAO implements GenericDAO<Vehicl
             }
             logger.info("No record found. Invalid ID");
         } catch (SQLException e) {
-            logger.info("Error executing SQL query:" + e.getMessage());
+            logger.error("Error executing SQL query:" + e.getMessage());
         }
         return null;
     }
@@ -53,7 +53,7 @@ public class VehicleCategoryDAO extends AbstractDAO implements GenericDAO<Vehicl
             logger.info(vehicleCategories);
             return vehicleCategories;
         } catch (SQLException e) {
-            logger.info("Error executing SQL query");
+            logger.error("Error executing SQL query");
             e.printStackTrace();
         }
         return null;
@@ -66,7 +66,7 @@ public class VehicleCategoryDAO extends AbstractDAO implements GenericDAO<Vehicl
             preparedStatement.executeUpdate();
             logger.info("Insertion complete");
         } catch (SQLException e) {
-            logger.info("Error executing SQL query");
+            logger.error("Error executing SQL query");
             e.printStackTrace();
         }
     }
@@ -79,8 +79,8 @@ public class VehicleCategoryDAO extends AbstractDAO implements GenericDAO<Vehicl
             preparedStatement.executeUpdate();
             logger.info("Update complete");
         } catch (SQLException e) {
-            logger.info("Update error:"+e.getMessage());
-            logger.info("Error! id is null. Use another non-null id");
+            logger.error("Update error:"+e.getMessage());
+            logger.error("Error! id is null. Use another non-null id");
         }
     }
 
@@ -93,8 +93,7 @@ public class VehicleCategoryDAO extends AbstractDAO implements GenericDAO<Vehicl
                 logger.info("Deletion complete");
             }
         } catch (SQLException e) {
-            logger.info("Error executing SQL query");
-            e.printStackTrace();
+            logger.error("Error executing SQL query");
         }
     }
 }

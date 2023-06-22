@@ -56,7 +56,7 @@ public class BranchLocationDAO extends AbstractDAO implements GenericDAO<BranchL
             logger.info(branchLocations);
             return branchLocations;
         } catch (SQLException e) {
-            logger.info("SQL query error:"+e.getMessage());
+            logger.error("SQL query error:"+e.getMessage());
         }
         return null;
     }
@@ -71,7 +71,7 @@ public class BranchLocationDAO extends AbstractDAO implements GenericDAO<BranchL
             preparedStatement.executeUpdate();
             logger.info("Insertion complete");
         } catch (SQLException e) {
-            logger.info("Error executing SQL query:"+e.getMessage());
+            logger.error("Error executing SQL query:"+e.getMessage());
         }
     }
 
@@ -86,8 +86,8 @@ public class BranchLocationDAO extends AbstractDAO implements GenericDAO<BranchL
             preparedStatement.executeUpdate();
             logger.info("Update complete");
         } catch (SQLException e) {
-            logger.info("Update error:"+e.getMessage());
-            logger.info("Error! id is null. Use another non-null id");
+            logger.error("Update error:"+e.getMessage());
+            logger.error("Error! id is null. Use another non-null id");
         }
     }
 
@@ -98,7 +98,7 @@ public class BranchLocationDAO extends AbstractDAO implements GenericDAO<BranchL
             preparedStatement.executeUpdate();
             System.out.println("Deletion complete");
         } catch (SQLException e) {
-            logger.info("Error executing SQL query:"+e.getMessage());
+            logger.error("Error executing SQL query:"+e.getMessage());
         }
     }
 }

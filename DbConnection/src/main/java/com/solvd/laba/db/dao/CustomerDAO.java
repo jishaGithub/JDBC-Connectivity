@@ -34,7 +34,7 @@ public class CustomerDAO extends AbstractDAO implements GenericDAO<Customer> {
             }
             logger.info("No record found. Invalid ID");
         } catch (SQLException e) {
-            logger.info("SQL query error:"+e.getMessage());
+            logger.error("SQL query error:"+e.getMessage());
         }
         return null;
     }
@@ -58,7 +58,7 @@ public class CustomerDAO extends AbstractDAO implements GenericDAO<Customer> {
             logger.info(customers);
             return customers;
         } catch (SQLException e) {
-            logger.info("SQL query error:"+e.getMessage());
+            logger.error("SQL query error:"+e.getMessage());
         }
         return null;
     }
@@ -74,7 +74,7 @@ public class CustomerDAO extends AbstractDAO implements GenericDAO<Customer> {
             preparedStatement.executeUpdate();
             logger.info("Insertion complete");
         } catch (SQLException e) {
-            logger.info("SQL query error:"+e.getMessage());
+            logger.error("SQL query error:"+e.getMessage());
         }
     }
 
@@ -90,8 +90,8 @@ public class CustomerDAO extends AbstractDAO implements GenericDAO<Customer> {
             preparedStatement.executeUpdate();
             logger.info("Update complete");
         } catch (SQLException e) {
-            logger.info("Update error:"+e.getMessage());
-            logger.info("Error! id is null. Use another non-null id");
+            logger.error("Update error:"+e.getMessage());
+            logger.error("Error! id is null. Use another non-null id");
         }
     }
 

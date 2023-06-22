@@ -54,8 +54,7 @@ public class BranchDAO extends AbstractDAO implements GenericDAO<Branch> {
             logger.info(branches);
             return branches;
         } catch (SQLException e) {
-            logger.info("Error");
-            e.printStackTrace();
+            logger.error("SQL query error:"+e.getMessage());
         }
         return null;
     }
@@ -68,8 +67,7 @@ public class BranchDAO extends AbstractDAO implements GenericDAO<Branch> {
             preparedStatement.executeUpdate();
             logger.info("Insertion complete");
         } catch (SQLException e) {
-            logger.info("Error");
-            e.printStackTrace();
+            logger.info("SQL query error:"+e.getMessage());
         }
     }
 
@@ -94,8 +92,7 @@ public class BranchDAO extends AbstractDAO implements GenericDAO<Branch> {
             preparedStatement.executeUpdate();
             logger.info("Deletion complete");
         } catch (SQLException e) {
-            logger.info("Deletion unsuccessful!");
-            e.printStackTrace();
+            logger.info("Deletion unsuccessful!"+e.getMessage());
         }
     }
 }

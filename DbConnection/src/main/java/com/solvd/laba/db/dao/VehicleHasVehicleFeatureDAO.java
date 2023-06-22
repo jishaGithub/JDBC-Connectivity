@@ -32,7 +32,7 @@ public class VehicleHasVehicleFeatureDAO extends AbstractDAO implements GenericD
             }
             logger.info("No record found. Invalid vehicleId");
         } catch (SQLException e) {
-            logger.info("Error finding record. Invalid vehicleId:" + e.getMessage());
+            logger.error("Error finding record. Invalid vehicleId:" + e.getMessage());
         }
         return null;
     }
@@ -52,8 +52,7 @@ public class VehicleHasVehicleFeatureDAO extends AbstractDAO implements GenericD
             logger.info(records);
             return records;
         } catch (SQLException e) {
-            logger.info("Error executing SQL query");
-            e.printStackTrace();
+            logger.error("Error executing SQL query");
         }
         return null;
     }
@@ -66,8 +65,7 @@ public class VehicleHasVehicleFeatureDAO extends AbstractDAO implements GenericD
             preparedStatement.executeUpdate();
             logger.info("Insertion complete");
         } catch (SQLException e) {
-            logger.info("Error executing SQL query");
-            e.printStackTrace();
+            logger.error("Error executing SQL query");
         }
     }
 
@@ -80,8 +78,8 @@ public class VehicleHasVehicleFeatureDAO extends AbstractDAO implements GenericD
             preparedStatement.executeUpdate();
             logger.info("Update complete");
         } catch (SQLException e) {
-            logger.info("Update error:"+e.getMessage());
-            logger.info("Error! id is null. Use another non-null id");
+            logger.error("Update error:"+e.getMessage());
+            logger.error("Error! id is null. Use another non-null id");
         }
     }
 
@@ -94,8 +92,7 @@ public class VehicleHasVehicleFeatureDAO extends AbstractDAO implements GenericD
                 logger.info("Deletion complete");
             }
         } catch (SQLException e) {
-            logger.info("Error executing SQL query");
-            e.printStackTrace();
+            logger.error("Error executing SQL query");
         }
     }
 }
