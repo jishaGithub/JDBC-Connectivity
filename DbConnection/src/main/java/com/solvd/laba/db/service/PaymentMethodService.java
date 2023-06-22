@@ -7,8 +7,7 @@ import org.apache.logging.log4j.Logger;
 import com.solvd.laba.db.util.GenericDAO;
 import java.util.ArrayList;
 
-public class PaymentMethodService implements GenericDAO<PaymentMethod> {
-    private static final Logger logger = LogManager.getLogger(PaymentMethodService.class);
+public class PaymentMethodService implements GenericDAO<PaymentMethod> {    
     private PaymentMethodDAO paymentMethodDAO;
 
     public PaymentMethodService(PaymentMethodDAO paymentMethodDAO) {
