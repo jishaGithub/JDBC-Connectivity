@@ -7,8 +7,7 @@ import org.apache.logging.log4j.Logger;
 import com.solvd.laba.db.util.GenericDAO;
 import java.util.ArrayList;
 
-public class InsuranceService implements GenericDAO<Insurance> {
-    private static final Logger logger = LogManager.getLogger(InsuranceService.class);
+public class InsuranceService implements GenericDAO<Insurance> {    
     private InsuranceDAO insuranceDAO;
 
     public InsuranceService(InsuranceDAO insuranceDAO) {
