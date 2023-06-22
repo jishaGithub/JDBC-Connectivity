@@ -8,8 +8,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 
-public class CustomerService implements GenericDAO<Customer> {
-    private static final Logger logger = LogManager.getLogger(CustomerService.class);
+public class CustomerService implements GenericDAO<Customer> {    
     private CustomerDAO customerDAO;
 
     public CustomerService(CustomerDAO customerDAO) {
