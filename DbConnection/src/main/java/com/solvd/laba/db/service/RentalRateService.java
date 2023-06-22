@@ -7,8 +7,7 @@ import org.apache.logging.log4j.Logger;
 import com.solvd.laba.db.util.GenericDAO;
 import java.util.ArrayList;
 
-public class RentalRateService implements GenericDAO<RentalRate> {
-    private static final Logger logger = LogManager.getLogger(RentalRateService.class);
+public class RentalRateService implements GenericDAO<RentalRate> {    
     private RentalRateDAO rentalRateDAO;
 
     public RentalRateService(RentalRateDAO rentalRateDAO) {
