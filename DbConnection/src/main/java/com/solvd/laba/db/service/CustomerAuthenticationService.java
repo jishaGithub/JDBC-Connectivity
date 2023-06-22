@@ -8,7 +8,6 @@ import com.solvd.laba.db.util.GenericDAO;
 import java.util.ArrayList;
 
 public class CustomerAuthenticationService implements GenericDAO<CustomerAuthentication> {
-    private static final Logger logger = LogManager.getLogger(CustomerAuthenticationService.class);
     private CustomerAuthenticationDAO customerAuthenticationDAO;
 
     public CustomerAuthenticationService(CustomerAuthenticationDAO customerAuthenticationDAO) {
