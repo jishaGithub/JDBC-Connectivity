@@ -9,7 +9,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class ConfigFileDAO {
-    private static final Logger logger = LogManager.getLogger(BranchDAO.class);
+    private static final Logger logger = LogManager.getLogger(ConfigFileDAO.class);
     private static BasicDataSource dataSource;
 
     public static void loadPropertyConfigFile() {
