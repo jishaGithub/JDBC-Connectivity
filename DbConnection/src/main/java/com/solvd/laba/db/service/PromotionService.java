@@ -7,8 +7,7 @@ import org.apache.logging.log4j.Logger;
 import com.solvd.laba.db.util.GenericDAO;
 import java.util.ArrayList;
 
-public class PromotionService implements GenericDAO<Promotion> {
-    private static final Logger logger = LogManager.getLogger(PromotionService.class);
+public class PromotionService implements GenericDAO<Promotion> {    
     private PromotionDAO promotionDAO;
 
     public PromotionService(PromotionDAO promotionDAO) {
