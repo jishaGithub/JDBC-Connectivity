@@ -25,7 +25,7 @@ public class ConfigFileDAO {
             dataSource.setMaxIdle(10);
             dataSource.setMaxWaitMillis(200);
         } catch (IOException e) {
-            logger.info("Error loading the property file");
+            logger.error("Error loading the property file");
         }
     }
 
