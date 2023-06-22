@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import com.solvd.laba.db.util.GenericDAO;
 
 public class BranchService implements GenericDAO<Branch> {
-    private static final Logger logger = LogManager.getLogger(BranchService.class);
     private BranchDAO branchDAO;
 
     public BranchService(BranchDAO branchDAO) {
