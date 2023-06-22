@@ -7,8 +7,7 @@ import org.apache.logging.log4j.Logger;
 import com.solvd.laba.db.util.GenericDAO;
 import java.util.ArrayList;
 
-public class EmployeeService implements GenericDAO<Employee> {
-    private static final Logger logger = LogManager.getLogger(EmployeeService.class);
+public class EmployeeService implements GenericDAO<Employee> {    
     private EmployeeDAO employeeDAO;
 
     public EmployeeService(EmployeeDAO employeeDAO) {
