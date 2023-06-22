@@ -8,7 +8,6 @@ import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 
 public class BranchLocationService implements GenericDAO<BranchLocation> {
-    private static final Logger logger = LogManager.getLogger(BranchLocationService.class);
     private BranchLocationDAO branchLocationDAO;
 
     public BranchLocationService(BranchLocationDAO branchLocationDAO) {
