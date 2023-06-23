@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.solvd.laba.db.mybatis.mapper.VehicleFeatureMapper">
+
+    <resultMap id="VehicleFeatureResultMap" type="com.solvd.laba.db.model.VehicleFeature">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="availability" column="availability"/>
+        <result property="additionalCost" column="additional_cost"/>
+    </resultMap>
+
+    <select id="getVehicleFeatureById" resultMap="VehicleFeatureResultMap">
+        SELECT id, name, availability, additional_cost
+        FROM vehicle_feature
+        WHERE id = #{id}
+    </select>
+
+    <select id="getAllVehicleFeatures" resultMap="VehicleFeatureResultMap">
+        SELECT id, name, availability, additional_cost
+        FROM vehicle_feature
+    </select>
+
+    <insert id="insertVehicleFeature">
+        INSERT INTO vehicle_feature (id, name, availability, additional_cost)
+        VALUES (#{id}, #{name}, #{availability}, #{additionalCost})
+    </insert>
+
+    <update id="updateVehicleFeature">
+        UPDATE vehicle_feature
+        SET name = #{name}, availability = #{availability}, additional_cost = #{additionalCost}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteVehicleFeature">
+        DELETE FROM vehicle_feature
+        WHERE id = #{id}
+    </delete>
+
+</mapper>
