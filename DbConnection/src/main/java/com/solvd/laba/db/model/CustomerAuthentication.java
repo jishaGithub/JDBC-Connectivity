@@ -16,8 +16,9 @@ public class CustomerAuthentication {
     @JsonProperty("password")
     private String password;
     @XmlElement(name = "customerId")
-    @JsonProperty("customerId")
-    private Integer customerId;
+
+    @JsonProperty("customerId") 
+    private int customerId;
 
     public CustomerAuthentication() {}
     public CustomerAuthentication(int id, String userName, String password, Integer customerId) {
