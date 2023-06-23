@@ -5,6 +5,8 @@ import com.solvd.laba.db.model.CustomerAuthentication;
 import com.solvd.laba.db.model.Employee;
 import com.solvd.laba.db.service.*;
 import com.solvd.laba.db.util.ConfigFileDAO;
+import com.solvd.laba.db.xml.parser.XMLParser;
+import com.solvd.laba.db.xml.validation.XMLValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -49,5 +51,13 @@ public class Main {
         } catch (SQLException e) {
             logger.info(e.getMessage());
         }
+        String xmlFileName = "src/main/resources/carRentalService.xml";
+        String schemaFileName = "src/main/resources/carRentalService.xsd";
+        XMLValidator xmlValidator = new XMLValidator();
+        xmlValidator.domValidator(xmlFileName, schemaFileName);
+        xmlValidator.SAXValidator(xmlFileName, schemaFileName);
+        xmlValidator.staxValidation(xmlFileName, schemaFileName);
+        XMLParser xmlParser = new XMLParser();
+        xmlParser.domXmlParser();
     }
 }
