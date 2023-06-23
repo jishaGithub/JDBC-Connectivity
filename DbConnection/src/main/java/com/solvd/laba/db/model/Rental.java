@@ -18,12 +18,12 @@ public class Rental {
     private int id;
     @XmlElement(name = "rentalDate")
     @XmlJavaTypeAdapter(CustomDate.class)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     @JsonProperty("rentalDate")
     private Date rentalDate;
     @XmlElement(name = "returnDate")
     @XmlJavaTypeAdapter(CustomDate.class)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     @JsonProperty("returnDate")
     private Date returnDate;
     @XmlElement(name ="customerId")
