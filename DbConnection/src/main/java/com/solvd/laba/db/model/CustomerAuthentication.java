@@ -12,7 +12,7 @@ public class CustomerAuthentication {
     @XmlElement(name = "password", required = true)
     private String password;
     @XmlElement(name = "customerId")
-    private Integer customerId;
+    private int customerId;
 
     public CustomerAuthentication() {
     }     
