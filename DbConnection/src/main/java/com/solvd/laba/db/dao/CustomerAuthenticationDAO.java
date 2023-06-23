@@ -54,7 +54,7 @@ public class CustomerAuthenticationDAO extends AbstractDAO implements GenericDAO
         } catch (SQLException e) {
             logger.error("SQL query error:"+e.getMessage());
         }
-        logger.info(customerAuthList);
+        logger.error(customerAuthList);
         return customerAuthList;
     }
 
@@ -67,7 +67,7 @@ public class CustomerAuthenticationDAO extends AbstractDAO implements GenericDAO
             preparedStatement.executeUpdate();
             logger.info("Insertion complete");
         } catch (SQLException e) {
-            logger.info("Error executing SQL query:"+e.getMessage());
+            logger.error("Error executing SQL query:"+e.getMessage());
         }
     }
 

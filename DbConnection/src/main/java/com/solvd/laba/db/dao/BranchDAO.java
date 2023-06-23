@@ -33,7 +33,7 @@ public class BranchDAO extends AbstractDAO implements GenericDAO<Branch> {
             }
             logger.info("No record found. Invalid ID");
         } catch (SQLException e) {
-            logger.info("SQL query error:"+e.getMessage());
+            logger.error("SQL query error:"+e.getMessage());
         }
         return null;
     }
@@ -67,7 +67,7 @@ public class BranchDAO extends AbstractDAO implements GenericDAO<Branch> {
             preparedStatement.executeUpdate();
             logger.info("Insertion complete");
         } catch (SQLException e) {
-            logger.info("SQL query error:"+e.getMessage());
+            logger.error("SQL query error:"+e.getMessage());
         }
     }
 
@@ -80,8 +80,8 @@ public class BranchDAO extends AbstractDAO implements GenericDAO<Branch> {
             preparedStatement.executeUpdate();
             logger.info("Update complete");
         } catch (SQLException e) {
-            logger.info("Update error:"+e.getMessage());
-            logger.info("Error! id is null. Use another non-null id");
+            logger.error("Update error:"+e.getMessage());
+            logger.error("Error! id is null. Use another non-null id");
         }
     }
 
@@ -92,7 +92,7 @@ public class BranchDAO extends AbstractDAO implements GenericDAO<Branch> {
             preparedStatement.executeUpdate();
             logger.info("Deletion complete");
         } catch (SQLException e) {
-            logger.info("Deletion unsuccessful!"+e.getMessage());
+            logger.error("Deletion unsuccessful!"+e.getMessage());
         }
     }
 }

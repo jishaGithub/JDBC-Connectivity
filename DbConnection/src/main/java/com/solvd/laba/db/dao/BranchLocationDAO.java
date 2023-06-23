@@ -33,7 +33,7 @@ public class BranchLocationDAO extends AbstractDAO implements GenericDAO<BranchL
             }
             logger.info("No record found. Invalid ID");
         } catch (SQLException e) {
-            logger.info("SQL query error:"+e.getMessage());
+            logger.error("SQL query error:"+e.getMessage());
         }
         return null;
     }

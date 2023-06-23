@@ -54,7 +54,6 @@ public class VehicleCategoryDAO extends AbstractDAO implements GenericDAO<Vehicl
             return vehicleCategories;
         } catch (SQLException e) {
             logger.error("Error executing SQL query");
-            e.printStackTrace();
         }
         return null;
     }
@@ -67,7 +66,6 @@ public class VehicleCategoryDAO extends AbstractDAO implements GenericDAO<Vehicl
             logger.info("Insertion complete");
         } catch (SQLException e) {
             logger.error("Error executing SQL query");
-            e.printStackTrace();
         }
     }
 
