@@ -5,17 +5,25 @@ import com.solvd.laba.db.xml.jaxb.CarRentalService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 public class JacksonParser {
-    Logger logger = LogManager.getLogger(JacksonParser.class);
+    private static final Logger logger = LogManager.getLogger(JacksonParser.class);
+
     public void jsonParser(String jsonFileName) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            CarRentalService deSerializeJackson = objectMapper.readValue(new File(jsonFileName),CarRentalService.class);
+        File jsonFile = new File(jsonFileName);
+        if (!jsonFile.exists()) {
+            logger.error("JSON file does not exist");
+            return;
+        }
+
+        try (FileInputStream fileInputStream = new FileInputStream(jsonFile)) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            CarRentalService deSerializeJackson = objectMapper.readValue(fileInputStream, CarRentalService.class);
             logger.info(deSerializeJackson);
         } catch (IOException e) {
-            logger.info(e.getMessage());
+            logger.error("Error occurred while parsing JSON: " + e.getMessage());
         }
     }
 }
