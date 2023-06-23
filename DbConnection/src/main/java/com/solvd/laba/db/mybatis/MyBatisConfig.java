@@ -19,7 +19,6 @@ public class MyBatisConfig {
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(input);
         } catch (IOException e) {
             logger.error(e.getMessage());
-            e.printStackTrace();
         }
     }
 
