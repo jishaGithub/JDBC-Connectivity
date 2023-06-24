@@ -23,21 +23,13 @@
         <mapper class="com.solvd.laba.db.mybatis.mapper.EmployeeMapper"/>
         <mapper class="com.solvd.laba.db.mybatis.mapper.InsuranceMapper"/>
         <mapper class="com.solvd.laba.db.mybatis.mapper.PaymentMapper"/>
-        <mapper class="com.solvd.laba.db.mybatis.mapper.PaymentMethodMapper"/>
         <mapper resource="MapperXml/PaymentMethodMapper.xml"/>
-        <mapper class="com.solvd.laba.db.mybatis.mapper.PromotionMapper"/>
         <mapper resource="MapperXml/PromotionMapper.xml"/>
-        <mapper class="com.solvd.laba.db.mybatis.mapper.RentalMapper"/>
         <mapper resource="MapperXml/RentalMapper.xml"/>
-        <mapper class="com.solvd.laba.db.mybatis.mapper.RentalRateMapper"/>
         <mapper resource="MapperXml/RentalRateMapper.xml"/>
-        <mapper class="com.solvd.laba.db.mybatis.mapper.VehicleCategoryMapper"/>
         <mapper resource="MapperXml/VehicleCategoryMapper.xml"/>
-        <mapper class="com.solvd.laba.db.mybatis.mapper.VehicleFeatureMapper"/>
         <mapper resource="MapperXml/VehicleFeatureMapper.xml"/>
-        <mapper class="com.solvd.laba.db.mybatis.mapper.VehicleHasVehicleFeatureMapper"/>
         <mapper resource="MapperXml/VehicleHasVehicleFeatureMapper.xml"/>
-        <mapper class="com.solvd.laba.db.mybatis.mapper.VehicleMapper"/>
         <mapper resource="MapperXml/VehicleMapper.xml"/>
     </mappers>
 </configuration>
