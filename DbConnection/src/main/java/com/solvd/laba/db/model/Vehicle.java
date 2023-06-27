@@ -1,31 +1,42 @@
 package com.solvd.laba.db.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.xml.bind.annotation.*;
 
 @XmlRootElement(name = "vehicle")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Vehicle {
     @XmlAttribute
+    @JsonProperty("id")
     private int id;
     @XmlElement
+    @JsonProperty("brand")
     private String brand;
     @XmlElement
+    @JsonProperty("model")
     private String model;
     @XmlElement
+    @JsonProperty("year")
     private int year;
     @XmlElement
+    @JsonProperty("color")
     private String color;
     @XmlElement
+    @JsonProperty("mileage")
     private int mileage;
     @XmlElement(name = "licenseNo")
+    @JsonProperty("licenseNumber")
     private String licenseNumber;
     @XmlTransient
+    @JsonIgnore
     private int categoryId;
-    @XmlElement(name = "customerId")
+    @XmlTransient
+    @JsonProperty("customerId")
     private int customerId;
     
     public Vehicle() {
-    }  
+    }
     
     public Vehicle(int id, String brand, String model, int year, String color, int mileage, String licenseNumber,
                    int categoryId, int customerId) {

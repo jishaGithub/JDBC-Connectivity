@@ -1,8 +1,12 @@
 package com.solvd.laba.db.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.solvd.laba.db.xml.jaxb.CustomDate;
 import jakarta.xml.bind.annotation.*;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 import java.util.Date;
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -10,26 +14,37 @@ import java.util.Date;
 public class Rental {
 
     @XmlAttribute
+    @JsonProperty("id")
     private int id;
     @XmlElement(name = "rentalDate")
     @XmlJavaTypeAdapter(CustomDate.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    @JsonProperty("rentalDate")
     private Date rentalDate;
     @XmlElement(name = "returnDate")
     @XmlJavaTypeAdapter(CustomDate.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    @JsonProperty("returnDate")
     private Date returnDate;
     @XmlElement(name ="customerId")
+    @JsonProperty("customerId")
     private int customerId;
     @XmlTransient
+    @JsonIgnore
     private int insuranceId;
     @XmlTransient
+    @JsonIgnore
     private int rentalRateId;
     @XmlElement(name="vehicleId")
+    @JsonProperty("vehicleId")
     private int vehicleId;
     @XmlTransient
+    @JsonIgnore
     private int promotionId;
     @XmlTransient
+    @JsonIgnore
     private int employeeId;
-    
+
     public Rental() {
     }
 
@@ -44,7 +59,7 @@ public class Rental {
         this.vehicleId = vehicleId;
         this.promotionId = promotionId;
         this.employeeId = employeeId;
-    }   
+    }
 
     public int getId() {
         return id;

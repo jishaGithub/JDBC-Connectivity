@@ -1,24 +1,29 @@
 package com.solvd.laba.db.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name= "customer")
 public class Customer {
-
     @XmlAttribute
+    @JsonProperty("id")
     private int id;
     @XmlElement
+    @JsonProperty("firstName")
     private String firstName;
     @XmlElement
+    @JsonProperty("lastName")
     private String lastName;
     @XmlElement(name = "customerEmail")
+    @JsonProperty("email")
     private String email;
     @XmlElement
+    @JsonProperty("phoneNumber")
     private String phoneNumber;
     @XmlElement
+    @JsonProperty("age")
     private int age;
-    
     public Customer(){
     }
 
@@ -29,7 +34,7 @@ public class Customer {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.age = age;
-    }   
+    }
 
     public int getId() {
         return id;

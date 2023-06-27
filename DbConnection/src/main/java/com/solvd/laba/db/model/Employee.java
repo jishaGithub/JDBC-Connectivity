@@ -1,28 +1,32 @@
 package com.solvd.laba.db.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.xml.bind.annotation.*;
 
 @XmlRootElement(name = "employee")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Employee {    
+public class Employee {
     @XmlAttribute
+    @JsonProperty("id")
     private int id;
     @XmlElement
+    @JsonProperty("name")
     private String name;
     @XmlElement(name = "employeeEmail")
+    @JsonProperty("email")
     private String email;
     @XmlElement(name = "branchId")
+    @JsonProperty("branchId")
     private int branchId;
 
-    public Employee() {
-    }
+    public Employee() {}
 
     public Employee (int id, String name, String email, int branchId) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.branchId = branchId;
-    }   
+    }
 
     public int getId() {
         return id;

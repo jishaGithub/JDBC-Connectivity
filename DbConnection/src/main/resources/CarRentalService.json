@@ -1,0 +1,96 @@
+{
+  "customers": [
+    {
+      "id" : 1,
+      "firstName" : "John",
+      "lastName" : "David",
+      "email" : "jd@gmail.com",
+      "phoneNumber" : "6783452345",
+      "age" : 26
+    },
+    {
+      "id" : 2,
+      "firstName" : "Kate",
+      "lastName" : "Steve",
+      "email" : "ks@gmail.com",
+      "phoneNumber" : "6542348765",
+      "age" : 25
+    }
+  ],
+  "rentals" : [
+    {
+      "id": 1,
+      "rentalDate": "23-06-2023 10:34:56",
+      "returnDate": "23-07-2023 11:23:40",
+      "customerId": 1,
+      "insuranceId": 1,
+      "rentalRateId": 1,
+      "vehicleId": 1,
+      "promotionId": 1,
+      "employeeId": 1
+    },
+    {
+      "id": 2,
+      "rentalDate": "15-03-2023 11:00:00",
+      "returnDate": "10-07-2023 12:00:00",
+      "customerId": 11,
+      "insuranceId": 2,
+      "rentalRateId": 1,
+      "vehicleId": 1,
+      "promotionId": 2,
+      "employeeId": 2
+    }
+  ],
+  "vehicles": [
+    {
+      "id": 1,
+      "brand": "Honda",
+      "model": "Pilot",
+      "year": 2021,
+      "color": "Red",
+      "mileage": 25,
+      "licenseNumber": "ABC123",
+      "categoryId": 1,
+      "customerId": 1
+    },
+    {
+      "id": 2,
+      "brand": "Honda",
+      "model": "CRV",
+      "year": 2018,
+      "color": "Black",
+      "mileage": 22,
+      "licenseNumber": "DEF423",
+      "categoryId": 2,
+      "customerId": 2
+    }
+  ],
+  "employees": [
+    {
+      "id": 1,
+      "name": "Mack",
+      "email": "mack@gmail.com",
+      "branchId": 1
+    },
+    {
+      "id": 2,
+      "name": "Tracy",
+      "email": "tracy@gmail.com",
+      "branchId": 2
+    }
+  ],
+ "customerAuthentications": [
+   {
+     "id": 1,
+     "userName": "s2023",
+     "password": "1234",
+     "customerId":1
+   },
+   {
+     "id": 2,
+     "userName": "k2022",
+     "password": "7856",
+     "customerId":2
+   }
+ ]
+}
