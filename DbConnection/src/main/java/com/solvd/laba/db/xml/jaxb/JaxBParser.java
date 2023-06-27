@@ -19,8 +19,7 @@ public class JaxBParser {
             File customerXml = new File("src/main/resources/sampleCustomer.xml");
             marshaller.marshal(customer,customerXml);
         } catch (JAXBException e) {
-            logger.error(e.getMessage());
-            logger.info(e.getStackTrace());
+            logger.error(e.getMessage());            
         }
     }
 
@@ -42,7 +41,7 @@ public class JaxBParser {
             logger.info(customerAuthenticationList);
             logger.info(vehicleList);
         } catch (JAXBException jbe) {
-            logger.info("Error: " + jbe.getMessage());
+            logger.error("Error: " + jbe.getMessage());
         }
     }
 }
