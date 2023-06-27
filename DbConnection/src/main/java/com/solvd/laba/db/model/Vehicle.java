@@ -1,16 +1,32 @@
 package com.solvd.laba.db.model;
 
-public class Vehicle {
-    private int id;
-    private String brand;
-    private String model;
-    private int year;
-    private String color;
-    private int mileage;
-    private String licenseNumber;
-    private int categoryId;
-    private int customerId;   
+import jakarta.xml.bind.annotation.*;
 
+@XmlRootElement(name = "vehicle")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class Vehicle {
+    @XmlAttribute
+    private int id;
+    @XmlElement
+    private String brand;
+    @XmlElement
+    private String model;
+    @XmlElement
+    private int year;
+    @XmlElement
+    private String color;
+    @XmlElement
+    private int mileage;
+    @XmlElement(name = "licenseNo")
+    private String licenseNumber;
+    @XmlTransient
+    private int categoryId;
+    @XmlElement(name = "customerId")
+    private int customerId;
+    
+    public Vehicle() {
+    }  
+    
     public Vehicle(int id, String brand, String model, int year, String color, int mileage, String licenseNumber,
                    int categoryId, int customerId) {
         this.id = id;

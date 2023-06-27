@@ -1,10 +1,21 @@
 package com.solvd.laba.db.model;
 
-public class CustomerAuthentication {
+import jakarta.xml.bind.annotation.*;
+
+@XmlRootElement(name = "authentication")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class CustomerAuthentication {  
+    @XmlAttribute
     private int id;
+    @XmlElement(name = "userName", required = true)
     private String userName;
+    @XmlElement(name = "password", required = true)
     private String password;
-    private Integer customerId;    
+    @XmlElement(name = "customerId")
+    private int customerId;
+
+    public CustomerAuthentication() {
+    }     
 
     public CustomerAuthentication(int id, String userName, String password, Integer customerId) {
         this.id = id;
