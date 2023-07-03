@@ -1,4 +1,4 @@
-package com.solvd.laba.db.service;
+package com.solvd.laba.db.service.jdbc;
 
 import com.solvd.laba.db.dao.BranchLocationDAO;
 import com.solvd.laba.db.util.GenericDAO;
@@ -8,7 +8,6 @@ import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 
 public class BranchLocationService implements GenericDAO<BranchLocation> {
-    private static final Logger logger = LogManager.getLogger(BranchLocationService.class);
     private BranchLocationDAO branchLocationDAO;
 
     public BranchLocationService(BranchLocationDAO branchLocationDAO) {

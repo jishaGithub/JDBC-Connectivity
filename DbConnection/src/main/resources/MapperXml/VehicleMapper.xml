@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.solvd.laba.db.mybatis.mapper.VehicleMapper">
+
+    <resultMap id="VehicleResultMap" type="com.solvd.laba.db.model.Vehicle">
+        <id property="id" column="id"/>
+        <result property="brand" column="brand"/>
+        <result property="model" column="model"/>
+        <result property="year" column="year"/>
+        <result property="color" column="color"/>
+        <result property="mileage" column="mileage"/>
+        <result property="licenseNumber" column="license_number"/>
+        <result property="categoryId" column="category_id"/>
+        <result property="customerId" column="customer_id"/>
+    </resultMap>
+
+    <select id="getVehicleById" resultMap="VehicleResultMap">
+        SELECT id, brand, model, year, color, mileage, license_number, category_id, customer_id
+        FROM vehicle
+        WHERE id = #{id}
+    </select>
+
+    <select id="getAllVehicles" resultMap="VehicleResultMap">
+        SELECT id, brand, model, year, color, mileage, license_number, category_id, customer_id
+        FROM vehicle
+    </select>
+
+    <insert id="insertVehicle">
+        INSERT INTO vehicle (id, brand, model, year, color, mileage, license_number, category_id, customer_id)
+        VALUES (#{id}, #{brand}, #{model}, #{year}, #{color}, #{mileage}, #{licenseNumber}, #{categoryId}, #{customerId})
+    </insert>
+
+    <update id="updateVehicle">
+        UPDATE vehicle
+        SET brand = #{brand},
+        model = #{model},
+        year = #{year},
+        color = #{color},
+        mileage = #{mileage},
+        license_number = #{licenseNumber},
+        category_id = #{categoryId},
+        customer_id = #{customerId}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteVehicle">
+        DELETE FROM vehicle
+        WHERE id = #{id}
+    </delete>
+
+</mapper>

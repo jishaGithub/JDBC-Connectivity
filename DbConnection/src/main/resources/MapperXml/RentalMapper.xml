@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.solvd.laba.db.mybatis.mapper.RentalMapper">
+
+    <resultMap id="RentalResultMap" type="com.solvd.laba.db.model.Rental">
+        <id property="id" column="id"/>
+        <result property="rentalDate" column="rental_date"/>
+        <result property="returnDate" column="return_date"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="insuranceId" column="insurance_id"/>
+        <result property="rentalRateId" column="rental_rate_id"/>
+        <result property="vehicleId" column="vehicle_id"/>
+        <result property="promotionId" column="promotion_id"/>
+        <result property="employeeId" column="employee_id"/>
+    </resultMap>
+
+    <select id="getRentalById" resultMap="RentalResultMap">
+        SELECT id, rental_date, return_date, customer_id, insurance_id,
+        rental_rate_id, vehicle_id, promotion_id, employee_id
+        FROM rental
+        WHERE id = #{id}
+    </select>
+
+    <select id="getAllRentals" resultMap="RentalResultMap">
+        SELECT id, rental_date, return_date, customer_id, insurance_id,
+        rental_rate_id, vehicle_id, promotion_id, employee_id
+        FROM rental
+    </select>
+
+    <insert id="insertRental">
+        INSERT INTO rental (id, rental_date, return_date, customer_id,
+        insurance_id, rental_rate_id, vehicle_id,
+        promotion_id, employee_id)
+        VALUES (#{id}, #{rentalDate}, #{returnDate}, #{customerId},
+        #{insuranceId}, #{rentalRateId}, #{vehicleId},
+        #{promotionId}, #{employeeId})
+    </insert>
+
+    <update id="updateRental">
+        UPDATE rental
+        SET rental_date = #{rentalDate},
+        return_date = #{returnDate},
+        customer_id = #{customerId},
+        insurance_id = #{insuranceId},
+        rental_rate_id = #{rentalRateId},
+        vehicle_id = #{vehicleId},
+        promotion_id = #{promotionId},
+        employee_id = #{employeeId}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteRental">
+        DELETE FROM rental
+        WHERE id = #{id}
+    </delete>
+
+</mapper>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.solvd.laba.db.mybatis.mapper.RentalRateMapper">
+
+    <resultMap id="RentalRateResultMap" type="com.solvd.laba.db.model.RentalRate">
+        <id property="id" column="id"/>
+        <result property="rentalType" column="rental_type"/>
+        <result property="rentalAmount" column="rental_amount"/>
+        <result property="minDuration" column="min_duration"/>
+        <result property="maxDuration" column="max_duration"/>
+    </resultMap>
+
+    <select id="getRentalRateById" resultMap="RentalRateResultMap">
+        SELECT id, rental_type, rental_amount, min_duration, max_duration
+        FROM rental_rate
+        WHERE id = #{id}
+    </select>
+
+    <select id="getAllRentalRates" resultMap="RentalRateResultMap">
+        SELECT id, rental_type, rental_amount, min_duration, max_duration
+        FROM rental_rate
+    </select>
+
+    <insert id="insertRentalRate">
+        INSERT INTO rental_rate (id, rental_type, rental_amount, min_duration, max_duration)
+        VALUES (#{id}, #{rentalType}, #{rentalAmount}, #{minDuration}, #{maxDuration})
+    </insert>
+
+    <update id="updateRentalRate">
+        UPDATE rental_rate
+        SET rental_type = #{rentalType},
+        rental_amount = #{rentalAmount},
+        min_duration = #{minDuration},
+        max_duration = #{maxDuration}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteRentalRate">
+        DELETE FROM rental_rate
+        WHERE id = #{id}
+    </delete>
+
+</mapper>

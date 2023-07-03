@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <properties resource="db.properties" />
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${db.driver}"/>
+                <property name="url" value="${db.url}"/>
+                <property name="username" value="${db.username}"/>
+                <property name="password" value="${db.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <mapper class="com.solvd.laba.db.mybatis.mapper.CustomerMapper"/>
+        <mapper class="com.solvd.laba.db.mybatis.mapper.BranchLocationMapper"/>
+        <mapper class="com.solvd.laba.db.mybatis.mapper.BranchMapper"/>
+        <mapper class="com.solvd.laba.db.mybatis.mapper.CustomerAuthenticationMapper"/>
+        <mapper class="com.solvd.laba.db.mybatis.mapper.EmployeeMapper"/>
+        <mapper class="com.solvd.laba.db.mybatis.mapper.InsuranceMapper"/>
+        <mapper class="com.solvd.laba.db.mybatis.mapper.PaymentMapper"/>
+        <mapper resource="MapperXml/PaymentMethodMapper.xml"/>
+        <mapper resource="MapperXml/PromotionMapper.xml"/>
+        <mapper resource="MapperXml/RentalMapper.xml"/>
+        <mapper resource="MapperXml/RentalRateMapper.xml"/>
+        <mapper resource="MapperXml/VehicleCategoryMapper.xml"/>
+        <mapper resource="MapperXml/VehicleFeatureMapper.xml"/>
+        <mapper resource="MapperXml/VehicleHasVehicleFeatureMapper.xml"/>
+        <mapper resource="MapperXml/VehicleMapper.xml"/>
+    </mappers>
+</configuration>

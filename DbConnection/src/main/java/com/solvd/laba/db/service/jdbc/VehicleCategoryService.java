@@ -1,4 +1,4 @@
-package com.solvd.laba.db.service;
+package com.solvd.laba.db.service.jdbc;
 
 import com.solvd.laba.db.dao.VehicleCategoryDAO;
 import com.solvd.laba.db.model.VehicleCategory;

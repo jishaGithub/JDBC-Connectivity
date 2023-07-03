@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.solvd.laba.db.mybatis.mapper.VehicleCategoryMapper">
+
+    <resultMap id="VehicleCategoryResultMap" type="com.solvd.laba.db.model.VehicleCategory">
+        <id property="id" column="id"/>
+        <result property="categoryName" column="category_name"/>
+    </resultMap>
+
+    <select id="getVehicleCategoryById" resultMap="VehicleCategoryResultMap">
+        SELECT id, category_name
+        FROM vehicle_category
+        WHERE id = #{id}
+    </select>
+
+    <select id="getAllVehicleCategories" resultMap="VehicleCategoryResultMap">
+        SELECT id, category_name
+        FROM vehicle_category
+    </select>
+
+    <insert id="insertVehicleCategory">
+        INSERT INTO vehicle_category (id, category_name)
+        VALUES (#{id}, #{categoryName})
+    </insert>
+
+    <update id="updateVehicleCategory">
+        UPDATE vehicle_category
+        SET category_name = #{categoryName}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteVehicleCategory">
+        DELETE FROM vehicle_category
+        WHERE id = #{id}
+    </delete>
+
+</mapper>
