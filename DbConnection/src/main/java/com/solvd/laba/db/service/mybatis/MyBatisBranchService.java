@@ -25,7 +25,7 @@ public class MyBatisBranchService implements BranchMapper {
             }
             branchMapper.insertBranch(branch);
             logger.info("Insertion complete");
-        } catch(Exception e) {
+        } catch (Exception e) {
             logger.error(e.getMessage());
         }
     }
@@ -38,7 +38,7 @@ public class MyBatisBranchService implements BranchMapper {
             }
             branchMapper.updateBranch(branch);
             logger.info("Updation complete for branch Id: " + branch.getId());
-        } catch(RecordNotFoundException e) {
+        } catch (RecordNotFoundException e) {
             logger.error(e.getMessage());
         } catch (Exception e) {
             logger.error("branch_location_id is not valid" + e.getMessage());
@@ -53,7 +53,7 @@ public class MyBatisBranchService implements BranchMapper {
             }
             logger.info("Deletion complete for branch Id: " + branchId);
             branchMapper.deleteBranch(branchId);
-        } catch(RecordNotFoundException e) {
+        } catch (RecordNotFoundException e) {
             logger.error(e.getMessage());
         }
     }
@@ -66,7 +66,7 @@ public class MyBatisBranchService implements BranchMapper {
             Branch branch = branchMapper.getBranchById(branchId);
             logger.info(branch);
             return branch;
-        } catch(RecordNotFoundException e) {
+        } catch (RecordNotFoundException e) {
             logger.error(e.getMessage());
         }
         return null;
